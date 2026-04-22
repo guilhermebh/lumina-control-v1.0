@@ -478,20 +478,34 @@ input::placeholder, textarea::placeholder { color: var(--text-muted); opacity: 0
 .message.error { display: block; background: rgba(248,113,113,0.1); color: var(--danger); border: 1px solid rgba(248,113,113,0.2); }
 .message.success { display: block; background: rgba(52,211,153,0.1); color: var(--success); border: 1px solid rgba(52,211,153,0.2); }
 
-.divider { text-align: center; margin: 28px 0 18px; color: var(--text-muted); font-size: 0.82rem; text-transform: uppercase; letter-spacing: 1px; }
+.divider { text-align: center; margin: 32px 0 20px; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; position: relative; }
+.divider::before, .divider::after { content: ''; position: absolute; top: 50%; width: 25%; height: 1px; background: rgba(255,255,255,0.08); }
+.divider::before { left: 0; }
+.divider::after { right: 0; }
 
-.demo-users {
+.social-login { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 20px; }
+.social-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
     background: rgba(255,255,255,0.03);
-    padding: 16px;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border);
-    font-size: 0.82rem;
-    color: var(--text-muted);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: var(--transition);
 }
 
-.demo-users p { margin-bottom: 6px; font-weight: 600; color: var(--text-main); }
-.demo-users p.demo-client-label { margin-top: 12px; }
-.demo-users code { display: block; margin: 3px 0; color: var(--accent-light); font-family: 'Courier New', monospace; }
+.social-btn:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: var(--accent-light);
+    transform: translateY(-2px);
+}
+
+.social-btn svg { width: 20px; height: 20px; fill: currentColor; }
+.btn-gmail { color: #EA4335; }
+.btn-yahoo { color: #6001d2; }
+.btn-outlook { color: #0078d4; }
 
 /* ─── Results / Navbar ─── */
 .navbar {
