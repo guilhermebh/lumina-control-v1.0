@@ -5,24 +5,23 @@ from flask_cors import CORS
 import hashlib
 from functools import wraps
 
-
-# Serve static files from the project directory
+# Configuração do Flask
+# Definimos static_folder='.' para que ele busque arquivos HTML/CSS na raiz do projeto
 app = Flask(__name__, static_folder='.', static_url_path='')
 CORS(app, supports_credentials=True)
 app.secret_key = 'lumina_secret_key_2024'
 
-DB_NAME = os.path.join(os.path.dirname(os.path.abspath(__file__)), "lumina.db")
-
+# Caminho absoluto para o banco de dados
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_NAME = os.path.join(BASE_DIR, "lumina.db")
 
 def hash_senha(senha):
     return hashlib.sha256(senha.encode()).hexdigest()
-
 
 def get_db_connection():
     conn = sqlite3.connect(DB_NAME)
     conn.row_factory = sqlite3.Row
     return conn
-
 
 def verificar_autenticacao(f):
     @wraps(f)
@@ -33,42 +32,50 @@ def verificar_autenticacao(f):
         return f(*args, **kwargs)
     return decorated_function
 
-
-# ─── Serve HTML pages ───
+# ─── Rotas de Páginas (Frontend) ───
 @app.route('/')
 def serve_index():
     return send_from_directory('.', 'index.html')
 
+@app.route('/login.html')
+def serve_login():
+    return send_from_directory('.', 'login.html')
 
-@app.route('/<path:filename>')
-def serve_static(filename):
-    if os.path.exists(os.path.join(os.path.dirname(os.path.abspath(__file__)), filename)):
-        return send_from_directory('.', filename)
+@app.route('/dashboard.html')
+def serve_dashboard():
+    return send_from_directory('.', 'dashboard.html')
+
+# Captura arquivos estáticos (CSS, JS, Imagens) ou redireciona para o index
+@app.route('/<path:path>')
+def serve_static(path):
+    if os.path.exists(os.path.join(BASE_DIR, path)):
+        return send_from_directory('.', path)
     return send_from_directory('.', 'index.html')
-
 
 # ─── API Routes ───
 @app.route('/metricas', methods=['GET'])
 def obter_metricas():
-    conn = get_db_connection()
-    dados = conn.execute("SELECT valor, custo FROM ensaios").fetchall()
-    conn.close()
+    try:
+        conn = get_db_connection()
+        dados = conn.execute("SELECT valor, custo FROM ensaios").fetchall()
+        conn.close()
 
-    if not dados:
-        return jsonify({"ticket_medio": "R$ 0,00", "roi_total": "0%", "total_projetos": 0})
+        if not dados:
+            return jsonify({"ticket_medio": "R$ 0,00", "roi_total": "0%", "total_projetos": 0})
 
-    total_receita = sum(d['valor'] for d in dados)
-    total_custo = sum(d['custo'] for d in dados)
+        total_receita = sum(d['valor'] for d in dados)
+        total_custo = sum(d['custo'] for d in dados)
 
-    ticket = total_receita / len(dados)
-    roi = ((total_receita - total_custo) / total_custo) * 100 if total_custo > 0 else 0
+        ticket = total_receita / len(dados)
+        roi = ((total_receita - total_custo) / total_custo) * 100 if total_custo > 0 else 0
 
-    return jsonify({
-        "ticket_medio": f"R$ {ticket:,.2f}",
-        "roi_total": f"{roi:.1f}%",
-        "total_projetos": len(dados)
-    })
-
+        return jsonify({
+            "ticket_medio": f"R$ {ticket:,.2f}",
+            "roi_total": f"{roi:.1f}%",
+            "total_projetos": len(dados)
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -98,12 +105,10 @@ def login():
     else:
         return jsonify({"error": "Email ou senha inválidos"}), 401
 
-
 @app.route('/logout', methods=['POST'])
 def logout():
     session.clear()
     return jsonify({"sucesso": True}), 200
-
 
 @app.route('/usuario/perfil', methods=['GET'])
 @verificar_autenticacao
@@ -124,7 +129,6 @@ def obter_perfil():
         }), 200
     else:
         return jsonify({"error": "Usuário não encontrado"}), 404
-
 
 @app.route('/usuario/ensaios', methods=['GET'])
 @verificar_autenticacao
@@ -154,7 +158,6 @@ def obter_ensaios_usuario():
 
     return jsonify(resultado), 200
 
-
 @app.route('/ensaios', methods=['POST'])
 def adicionar_ensaio():
     data = request.get_json()
@@ -179,8 +182,7 @@ def adicionar_ensaio():
     finally:
         conn.close()
 
-
 if __name__ == "__main__":
-    print("\n🚀 Lumina Control - Servidor iniciado!")
-    print("📍 Acesse: http://127.0.0.1:5000\n")
+    print("\nLumina Control - Servidor iniciado!")
+    print("Acesse: http://127.0.0.1:5000\n")
     app.run(debug=True, port=5000)
