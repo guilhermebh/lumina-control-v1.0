@@ -10,51 +10,56 @@
 <body>
 
 <div class="login-wrapper">
-    <div class="login-box">
-        <nav class="site-nav">
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="login.html" class="active">Cliente</a></li>
-                <li><a href="agendamento.html">Agendamento</a></li>
-                <li><a href="contato.html">Contato</a></li>
-            </ul>
-        </nav>
-
-        <div class="logo">
-            <h1>Lumina</h1>
-            <p>Dashboard de Resultados</p>
+    <div class="login-split">
+        <!-- Lado Imersivo (Imagem) -->
+        <div class="login-image-side">
+            <div class="login-image-content">
+                <h2>O futuro do controle em suas mãos.</h2>
+                <p>Acesse o Lumina Control e visualize seus resultados com a precisão e clareza que seu negócio merece.</p>
+            </div>
         </div>
 
-        <form id="login-form">
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+        <!-- Lado do Formulário -->
+        <div class="login-form-side">
+            <div class="login-box">
+                <nav class="site-nav">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="login.html" class="active">Cliente</a></li>
+                        <li><a href="agendamento.html">Agendamento</a></li>
+                        <li><a href="contato.html">Contato</a></li>
+                    </ul>
+                </nav>
+
+                <div class="logo">
+                    <h1>Lumina</h1>
+                    <p>Dashboard de Resultados</p>
+                </div>
+
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="senha">Senha</label>
+                        <input type="password" id="senha" name="senha" placeholder="••••••••" required>
+                    </div>
+
+                    <button type="submit" class="btn-login">Entrar</button>
+                </form>
+
+                <div id="mensagem" class="message"></div>
+
+                <div class="divider">Credenciais de Teste</div>
+
+                <div class="demo-users">
+                    <p>👤 Cliente 1: <code>cliente1@lumina.com</code> | <code>senha123</code></p>
+                    <p>👤 Cliente 2: <code>cliente2@lumina.com</code> | <code>senha456</code></p>
+                    <p>👤 Cliente 3: <code>cliente3@lumina.com</code> | <code>senha789</code></p>
+                </div>
             </div>
-
-            <div class="form-group">
-                <label for="senha">Senha</label>
-                <input type="password" id="senha" name="senha" placeholder="••••••••" required>
-            </div>
-
-            <button type="submit" class="btn-login">Entrar</button>
-        </form>
-
-        <div id="mensagem" class="message"></div>
-
-        <div class="divider">Credenciais de Teste</div>
-
-        <div class="demo-users">
-            <p>👤 Cliente 1:</p>
-            <code>cliente1@lumina.com</code>
-            <code>senha123</code>
-
-            <p class="demo-client-label">👤 Cliente 2:</p>
-            <code>cliente2@lumina.com</code>
-            <code>senha456</code>
-
-            <p class="demo-client-label">👤 Cliente 3:</p>
-            <code>cliente3@lumina.com</code>
-            <code>senha789</code>
         </div>
     </div>
 </div>
