@@ -1,15 +1,41 @@
 import sqlite3
 import os
-from flask import Flask, jsonify, request, session, send_from_directory
+from flask import Flask, jsonify, request, session, send_from_directory, url_for, redirect
 from flask_cors import CORS
 import hashlib
 from functools import wraps
+from authlib.integrations.flask_client import OAuth
 
 # Configuração do Flask
 # Definimos static_folder='.' para que ele busque arquivos HTML/CSS na raiz do projeto
 app = Flask(__name__, static_folder='.', static_url_path='')
 CORS(app, supports_credentials=True)
 app.secret_key = 'lumina_secret_key_2024'
+
+# Configuração OAuth
+oauth = OAuth(app)
+google = oauth.register(
+    name='google',
+    client_id=os.getenv('GOOGLE_CLIENT_ID', 'placeholder'),
+    client_secret=os.getenv('GOOGLE_CLIENT_SECRET', 'placeholder'),
+    access_token_url='https://accounts.google.com/o/oauth2/token',
+    access_token_params=None,
+    authorize_url='https://accounts.google.com/o/oauth2/auth',
+    authorize_params=None,
+    api_base_url='https://www.googleapis.com/oauth2/v1/',
+    userinfo_endpoint='https://openidconnect.googleapis.com/v1/userinfo',
+    client_kwargs={'scope': 'openid email profile'},
+    server_metadata_url='https://accounts.google.com/.well-known/openid-configuration'
+)
+
+yahoo = oauth.register(
+    name='yahoo',
+    client_id=os.getenv('YAHOO_CLIENT_ID', 'placeholder'),
+    client_secret=os.getenv('YAHOO_CLIENT_SECRET', 'placeholder'),
+    authorize_url='https://api.login.yahoo.com/oauth2/request_auth',
+    access_token_url='https://api.login.yahoo.com/oauth2/get_token',
+    client_kwargs={'scope': 'openid profile email'},
+)
 
 # Caminho absoluto para o banco de dados
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -105,10 +131,39 @@ def login():
     else:
         return jsonify({"error": "Email ou senha inválidos"}), 401
 
-@app.route('/logout', methods=['POST'])
+@app.route('/logout', methods=['POST', 'GET'])
 def logout():
     session.clear()
-    return jsonify({"sucesso": True}), 200
+    if request.method == 'POST':
+        return jsonify({"sucesso": True}), 200
+    return send_from_directory('.', 'login.html')
+
+# ─── Social Login Routes ───
+@app.route('/login/<name>')
+def social_login(name):
+    client = oauth.create_client(name)
+    if not client:
+        return jsonify({"error": "Provedor não suportado"}), 404
+    redirect_uri = url_for('social_auth', name=name, _external=True)
+    return client.authorize_redirect(redirect_uri)
+
+@app.route('/auth/<name>')
+def social_auth(name):
+    client = oauth.create_client(name)
+    if not client:
+        return jsonify({"error": "Provedor não suportado"}), 404
+    token = client.authorize_access_token()
+    user = client.userinfo()
+    
+    if user:
+        # Aqui você pode salvar o usuário no banco se não existir
+        # Por enquanto, vamos apenas simular a sessão
+        session['usuario_id'] = user.get('sub') or user.get('email')
+        session['nome_usuario'] = user.get('name')
+        session['email_usuario'] = user.get('email')
+        return send_from_directory('.', 'results.html')
+    
+    return "Erro na autenticação social", 400
 
 @app.route('/usuario/perfil', methods=['GET'])
 @verificar_autenticacao
