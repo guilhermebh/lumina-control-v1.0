@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Lumina Control - Acesse seu painel de resultados">
+    <title>Lumina Control | Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="login-wrapper">
+    <div class="login-box">
+        <nav class="site-nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="login.html" class="active">Cliente</a></li>
+                <li><a href="agendamento.html">Agendamento</a></li>
+                <li><a href="contato.html">Contato</a></li>
+            </ul>
+        </nav>
+
+        <div class="logo">
+            <h1>Lumina</h1>
+            <p>Dashboard de Resultados</p>
+        </div>
+
+        <form id="login-form">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" name="senha" placeholder="••••••••" required>
+            </div>
+
+            <button type="submit" class="btn-login">Entrar</button>
+        </form>
+
+        <div id="mensagem" class="message"></div>
+
+        <div class="divider">Credenciais de Teste</div>
+
+        <div class="demo-users">
+            <p>👤 Cliente 1:</p>
+            <code>cliente1@lumina.com</code>
+            <code>senha123</code>
+
+            <p class="demo-client-label">👤 Cliente 2:</p>
+            <code>cliente2@lumina.com</code>
+            <code>senha456</code>
+
+            <p class="demo-client-label">👤 Cliente 3:</p>
+            <code>cliente3@lumina.com</code>
+            <code>senha789</code>
+        </div>
+    </div>
+</div>
+
+<script>
+    const API_URL = 'http://127.0.0.1:5000';
+    const form = document.getElementById('login-form');
+    const mensagemDiv = document.getElementById('mensagem');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const email = document.getElementById('email').value;
+        const senha = document.getElementById('senha').value;
+        const btn = form.querySelector('.btn-login');
+
+        btn.disabled = true;
+        btn.textContent = 'Carregando...';
+
+        try {
+            const response = await fetch(`${API_URL}/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, senha }),
+                credentials: 'include'
+            });
+
+            const dados = await response.json();
+
+            if (response.ok) {
+                mensagemDiv.className = 'message success';
+                mensagemDiv.textContent = '✅ Login realizado com sucesso! Redirecionando...';
+                setTimeout(() => {
+                    window.location.href = 'results.html';
+                }, 1500);
+            } else {
+                mensagemDiv.className = 'message error';
+                mensagemDiv.textContent = `❌ ${dados.error || 'Erro no login'}`;
+            }
+        } catch (error) {
+            mensagemDiv.className = 'message error';
+            mensagemDiv.textContent = '❌ Erro ao conectar com o servidor';
+            console.error('Erro:', error);
+        } finally {
+            btn.disabled = false;
+            btn.textContent = 'Entrar';
+        }
+    });
+</script>
+
+</body>
+</html>

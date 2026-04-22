@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Lumina Control - Seus resultados de ensaios fotográficos">
+    <title>Lumina Control | Meus Resultados</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="navbar">
+    <div class="navbar-content">
+        <h2>Lumina Control</h2>
+        <nav class="site-nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="results.html" class="active">Cliente</a></li>
+                <li><a href="agendamento.html">Agendamento</a></li>
+                <li><a href="contato.html">Contato</a></li>
+            </ul>
+        </nav>
+        <div class="navbar-user">
+            <div class="user-info">
+                <div class="user-name" id="nome-usuario">Carregando...</div>
+                <div class="user-email" id="email-usuario">-</div>
+            </div>
+            <button class="btn-logout" onclick="fazerLogout()">Sair</button>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <h1 class="page-title">Meus Resultados de Ensaios</h1>
+    <p class="subtitle">Compartilhe seus resultados e conquistas com sua rede</p>
+
+    <div id="conteudo-ensaios">
+        <div class="loading">
+            <div class="spinner"></div>
+            <p>Carregando seus ensaios...</p>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Compartilhamento -->
+<div id="modal-compartilhamento" class="modal">
+    <div class="modal-content">
+        <button class="close-modal" onclick="fecharModal()">×</button>
+        <div class="modal-titulo">Compartilhar Resultado</div>
+        <div class="share-options">
+            <button class="share-btn share-facebook" onclick="compartilharFacebook()">📘 Facebook</button>
+            <button class="share-btn share-twitter" onclick="compartilharTwitter()">𝕏 Twitter / X</button>
+            <button class="share-btn share-whatsapp" onclick="compartilharWhatsApp()">💬 WhatsApp</button>
+            <button class="share-btn share-linkedin" onclick="compartilharLinkedIn()">💼 LinkedIn</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const API_URL = 'http://127.0.0.1:5000';
+    let ensaioSelecionado = null;
+
+    window.addEventListener('DOMContentLoaded', () => {
+        carregarPerfil();
+        carregarEnsaios();
+    });
+
+    async function carregarPerfil() {
+        try {
+            const response = await fetch(`${API_URL}/usuario/perfil`, { credentials: 'include' });
+            if (response.status === 401) { window.location.href = 'login.html'; return; }
+            const usuario = await response.json();
+            document.getElementById('nome-usuario').textContent = usuario.nome;
+            document.getElementById('email-usuario').textContent = usuario.email;
+        } catch (error) {
+            console.error('Erro ao carregar perfil:', error);
+        }
+    }
+
+    async function carregarEnsaios() {
+        try {
+            const response = await fetch(`${API_URL}/usuario/ensaios`, { credentials: 'include' });
+            if (response.status === 401) { window.location.href = 'login.html'; return; }
+            const ensaios = await response.json();
+
+            if (ensaios.length === 0) {
+                document.getElementById('conteudo-ensaios').innerHTML = `
+                    <div class="empty-state">
+                        <h3>Nenhum ensaio encontrado</h3>
+                        <p>Você ainda não tem resultados de ensaios cadastrados.</p>
+                    </div>`;
+                return;
+            }
+
+            const html = ensaios.map(ensaio => `
+                <div class="ensaio-card">
+                    <img src="${ensaio.foto_url || ''}" alt="Resultado" class="ensaio-imagem"
+                         onerror="this.style.display='none'">
+                    <div class="ensaio-content">
+                        <div class="ensaio-descricao">${ensaio.descricao || 'Sem descrição'}</div>
+                        <div class="ensaio-metricas">
+                            <div class="metrica">
+                                <div class="metrica-label">Valor</div>
+                                <div class="metrica-valor">R$ ${Number(ensaio.valor).toLocaleString('pt-BR')}</div>
+                            </div>
+                            <div class="metrica">
+                                <div class="metrica-label">ROI</div>
+                                <div class="metrica-valor roi-positivo">${ensaio.roi}</div>
+                            </div>
+                        </div>
+                        <div class="ensaio-data">📅 ${new Date(ensaio.data_criacao).toLocaleDateString('pt-BR')}</div>
+                        <button class="btn-compartilhar" onclick="abrirModalCompartilhamento(${ensaio.id}, '${(ensaio.descricao || '').replace(/'/g, "\\'")}')">
+                            📤 Compartilhar
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('conteudo-ensaios').innerHTML = `<div class="ensaios-grid">${html}</div>`;
+        } catch (error) {
+            console.error('Erro ao carregar ensaios:', error);
+            document.getElementById('conteudo-ensaios').innerHTML = `
+                <div class="empty-state">
+                    <h3>Erro ao carregar ensaios</h3>
+                    <p>Verifique se o servidor está rodando e tente novamente.</p>
+                </div>`;
+        }
+    }
+
+    function abrirModalCompartilhamento(ensaioId, descricao) {
+        ensaioSelecionado = { id: ensaioId, descricao };
+        document.getElementById('modal-compartilhamento').classList.add('ativo');
+    }
+
+    function fecharModal() {
+        document.getElementById('modal-compartilhamento').classList.remove('ativo');
+        ensaioSelecionado = null;
+    }
+
+    function compartilharFacebook() {
+        const url = encodeURIComponent(window.location.href);
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, 'share', 'width=550,height=420');
+        fecharModal();
+    }
+
+    function compartilharTwitter() {
+        const url = encodeURIComponent(window.location.href);
+        const texto = encodeURIComponent(`Meu resultado no Lumina Control: ${ensaioSelecionado.descricao}`);
+        window.open(`https://twitter.com/intent/tweet?url=${url}&text=${texto}`, 'share', 'width=550,height=420');
+        fecharModal();
+    }
+
+    function compartilharWhatsApp() {
+        const texto = encodeURIComponent(`Confira meu resultado no Lumina Control: ${ensaioSelecionado.descricao} ${window.location.href}`);
+        window.open(`https://wa.me/?text=${texto}`, 'share');
+        fecharModal();
+    }
+
+    function compartilharLinkedIn() {
+        const url = encodeURIComponent(window.location.href);
+        window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, 'share', 'width=550,height=420');
+        fecharModal();
+    }
+
+    async function fazerLogout() {
+        try {
+            await fetch(`${API_URL}/logout`, { method: 'POST', credentials: 'include' });
+        } catch (e) { /* ignore */ }
+        window.location.href = 'login.html';
+    }
+
+    document.getElementById('modal-compartilhamento').addEventListener('click', (e) => {
+        if (e.target.id === 'modal-compartilhamento') fecharModal();
+    });
+</script>
+
+</body>
+</html>

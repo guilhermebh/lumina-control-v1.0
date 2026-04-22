@@ -1,0 +1,27 @@
+{
+  "keywords": [
+    "python",
+    "backend",
+    "ai"
+  ],
+  "locations": [
+    "remote",
+    "sao paulo",
+    "brazil"
+  ],
+  "search_url": "https://www.linkedin.com/jobs/search/?keywords=Python&location=Brazil",
+  "profile_dir": ".playwright/linkedin-profile",
+  "headless": false,
+  "scroll_rounds": 8,
+  "max_cards": 100,
+  "notify": true,
+  "notify_max_jobs": 10,
+  "telegram_bot_token": "",
+  "telegram_chat_id": "",
+  "discord_webhook_url": "",
+  "output_dir": "output",
+  "state_filename": "seen_jobs.json",
+  "json_filename": "jobs.json",
+  "csv_filename": "jobs.csv",
+  "html_snapshot_filename": "linkedin-search-snapshot.html"
+}

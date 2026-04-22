@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Lumina Control - Entre em contato com nossa equipe">
+    <title>Lumina Control | Contato</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <nav class="site-nav">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="login.html">Cliente</a></li>
+            <li><a href="agendamento.html">Agendamento</a></li>
+            <li><a href="contato.html" class="active">Contato</a></li>
+        </ul>
+    </nav>
+
+    <div class="form-card" style="margin-top: 0;">
+        <h2 style="font-size: 1.5rem; margin-bottom: 8px;">Fale Conosco</h2>
+        <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 0.92rem;">Envie dúvidas, sugestões ou solicitações de suporte.</p>
+
+        <form id="form-contato">
+            <div class="form-group">
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+            </div>
+            <div class="form-group">
+                <label for="assunto">Assunto</label>
+                <input type="text" id="assunto" name="assunto" placeholder="Assunto da mensagem" required>
+            </div>
+            <div class="form-group">
+                <label for="mensagem-texto">Mensagem</label>
+                <textarea id="mensagem-texto" name="mensagem" rows="5" placeholder="Escreva sua mensagem..." required></textarea>
+            </div>
+            <button type="submit" class="btn-submit">Enviar Mensagem</button>
+        </form>
+
+        <div id="contato-status" class="status-msg"></div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('form-contato').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const msg = document.getElementById('contato-status');
+        msg.textContent = '✅ Mensagem enviada com sucesso! Retornaremos em breve.';
+        msg.className = 'status-msg show success';
+        this.reset();
+        setTimeout(() => { msg.className = 'status-msg'; }, 5000);
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Lumina Control - Dashboard de Business Intelligence para Fotografia Profissional">
+    <title>Lumina Control | Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <nav class="site-nav">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="dashboard.html" class="active">Dashboard</a></li>
+            <li><a href="login.html">Cliente</a></li>
+            <li><a href="agendamento.html">Agendamento</a></li>
+            <li><a href="contato.html">Contato</a></li>
+        </ul>
+    </nav>
+
+    <header class="page-header">
+        <div>
+            <h1>Lumina Control <span class="badge">v1.0</span></h1>
+            <p class="header-link">
+                <a href="login.html">Acessar Painel do Cliente »</a>
+            </p>
+        </div>
+    </header>
+
+    <main class="dashboard-grid">
+        <div class="card">
+            <label>Ticket Médio</label>
+            <span class="value" id="ticket-medio">—</span>
+        </div>
+        <div class="card">
+            <label>ROI Global</label>
+            <span class="value" id="roi-total">—</span>
+        </div>
+        <div class="card">
+            <label>Projetos Ativos</label>
+            <span class="value" id="projetos-contagem">—</span>
+        </div>
+    </main>
+
+    <button class="btn-action" id="btn-sync" onclick="atualizarDashboard()">Sincronizar Dados</button>
+
+    <div class="form-card">
+        <h2>Adicionar Novo Ensaio</h2>
+        <div class="form-row">
+            <input type="number" id="valor-input" placeholder="Valor (ex: 5000)">
+            <input type="number" id="custo-input" placeholder="Custo (ex: 1200)">
+            <button class="btn-submit" onclick="adicionarEnsaio()">Adicionar</button>
+        </div>
+        <div id="mensagem-status" class="status-msg"></div>
+    </div>
+</div>
+
+<script>
+    const API_URL = 'http://127.0.0.1:5000';
+
+    window.addEventListener('DOMContentLoaded', () => {
+        atualizarDashboard();
+    });
+
+    async function atualizarDashboard() {
+        const btn = document.getElementById('btn-sync');
+        btn.textContent = 'Sincronizando...';
+        btn.disabled = true;
+
+        try {
+            const response = await fetch(`${API_URL}/metricas`);
+            const dados = await response.json();
+
+            animarValor('ticket-medio', dados.ticket_medio || 'R$ 0,00');
+            animarValor('roi-total', dados.roi_total || '0%');
+            animarValor('projetos-contagem', dados.total_projetos || '0');
+
+            console.log('✅ Dashboard atualizado:', dados);
+        } catch (error) {
+            console.error('❌ Erro ao sincronizar:', error);
+            document.getElementById('ticket-medio').textContent = 'Offline';
+            document.getElementById('roi-total').textContent = '—';
+            document.getElementById('projetos-contagem').textContent = '—';
+        } finally {
+            btn.textContent = 'Sincronizar Dados';
+            btn.disabled = false;
+        }
+    }
+
+    function animarValor(id, valor) {
+        const el = document.getElementById(id);
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(8px)';
+        setTimeout(() => {
+            el.textContent = valor;
+            el.style.transition = 'all 0.4s ease';
+            el.style.opacity = '1';
+            el.style.transform = 'translateY(0)';
+        }, 150);
+    }
+
+    async function adicionarEnsaio() {
+        const valor = document.getElementById('valor-input').value;
+        const custo = document.getElementById('custo-input').value;
+        const msg = document.getElementById('mensagem-status');
+
+        if (!valor || !custo) {
+            showMsg(msg, '❌ Preencha valor e custo', 'error');
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_URL}/ensaios`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ valor: parseFloat(valor), custo: parseFloat(custo) })
+            });
+
+            const resultado = await response.json();
+
+            if (response.ok) {
+                showMsg(msg, '✅ Ensaio adicionado com sucesso!', 'success');
+                document.getElementById('valor-input').value = '';
+                document.getElementById('custo-input').value = '';
+                setTimeout(() => atualizarDashboard(), 500);
+            } else {
+                showMsg(msg, `❌ ${resultado.error}`, 'error');
+            }
+        } catch (error) {
+            showMsg(msg, '❌ Erro ao adicionar ensaio', 'error');
+            console.error('Erro:', error);
+        }
+    }
+
+    function showMsg(el, text, type) {
+        el.textContent = text;
+        el.className = `status-msg show ${type}`;
+        setTimeout(() => { el.className = 'status-msg'; }, 4000);
+    }
+</script>
+
+</body>
+</html>

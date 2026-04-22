@@ -1,0 +1,1 @@
+"""LinkedIn jobs bot package."""
