@@ -283,6 +283,96 @@ input::placeholder, textarea::placeholder { color: var(--text-muted); opacity: 0
 .status-msg.success { background: rgba(52,211,153,0.1); color: var(--success); border: 1px solid rgba(52,211,153,0.2); }
 .status-msg.error { background: rgba(248,113,113,0.1); color: var(--danger); border: 1px solid rgba(248,113,113,0.2); }
 
+/* ─── Contact Page Premium ─── */
+.contact-page {
+    min-height: 100vh;
+    background: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=2064');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+.contact-page::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(15,15,19,0.7) 0%, rgba(15,15,19,0.95) 100%);
+}
+
+.contact-card {
+    position: relative;
+    z-index: 2;
+    background: rgba(255,255,255,0.02);
+    backdrop-filter: blur(30px);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 32px;
+    padding: 60px;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+    animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.contact-header { text-align: center; margin-bottom: 48px; }
+.contact-header h2 { font-size: 2.5rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 12px; }
+.contact-header p { color: var(--text-muted); font-size: 1rem; }
+
+.minimal-form .form-group { margin-bottom: 32px; position: relative; }
+.minimal-form label { 
+    font-size: 0.75rem; 
+    text-transform: uppercase; 
+    letter-spacing: 2px; 
+    color: var(--accent-light); 
+    margin-bottom: 12px;
+    display: block;
+}
+
+.minimal-form input, 
+.minimal-form textarea {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    border-radius: 0;
+    padding: 12px 0;
+    font-size: 1.1rem;
+    transition: var(--transition);
+}
+
+.minimal-form input:focus, 
+.minimal-form textarea:focus {
+    border-bottom-color: var(--accent);
+    box-shadow: none;
+    background: transparent;
+}
+
+.btn-minimal {
+    width: 100%;
+    padding: 20px;
+    background: #fff;
+    color: #000;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-top: 20px;
+}
+
+.btn-minimal:hover {
+    background: var(--accent-light);
+    color: #fff;
+    transform: translateY(-4px);
+    box-shadow: 0 15px 30px rgba(124,106,239,0.3);
+}
+
 /* ─── Login Page ─── */
 .login-wrapper {
     min-height: 100vh;

@@ -9,8 +9,8 @@
 </head>
 <body>
 
-<div class="container">
-    <nav class="site-nav">
+<div class="contact-page">
+    <nav class="site-nav" style="position: absolute; top: 30px; z-index: 10;">
         <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="login.html">Cliente</a></li>
@@ -19,28 +19,34 @@
         </ul>
     </nav>
 
-    <div class="form-card" style="margin-top: 0;">
-        <h2 style="font-size: 1.5rem; margin-bottom: 8px;">Fale Conosco</h2>
-        <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 0.92rem;">Envie dúvidas, sugestões ou solicitações de suporte.</p>
+    <div class="contact-card">
+        <div class="contact-header">
+            <h2>Vamos conversar?</h2>
+            <p>Deixe sua mensagem e nossa equipe retornará em tempo recorde.</p>
+        </div>
 
-        <form id="form-contato">
+        <form id="form-contato" class="minimal-form">
             <div class="form-group">
-                <label for="nome">Nome</label>
-                <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required>
+                <label for="nome">Nome Completo</label>
+                <input type="text" id="nome" name="nome" placeholder="Como devemos te chamar?" required>
             </div>
+
             <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+                <label for="email">E-mail Corporativo</label>
+                <input type="email" id="email" name="email" placeholder="seu@empresa.com" required>
             </div>
+
             <div class="form-group">
                 <label for="assunto">Assunto</label>
-                <input type="text" id="assunto" name="assunto" placeholder="Assunto da mensagem" required>
+                <input type="text" id="assunto" name="assunto" placeholder="Sobre o que deseja falar?" required>
             </div>
+
             <div class="form-group">
-                <label for="mensagem-texto">Mensagem</label>
-                <textarea id="mensagem-texto" name="mensagem" rows="5" placeholder="Escreva sua mensagem..." required></textarea>
+                <label for="mensagem-texto">Sua Mensagem</label>
+                <textarea id="mensagem-texto" name="mensagem" rows="3" placeholder="Conte-nos um pouco mais..." required></textarea>
             </div>
-            <button type="submit" class="btn-submit">Enviar Mensagem</button>
+
+            <button type="submit" class="btn-minimal">Enviar Agora</button>
         </form>
 
         <div id="contato-status" class="status-msg"></div>
