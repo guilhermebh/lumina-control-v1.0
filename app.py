@@ -3,6 +3,7 @@ import os
 from flask import Flask, jsonify, request, session, send_from_directory, url_for, redirect
 from flask_cors import CORS
 import hashlib
+import shutil
 from functools import wraps
 from authlib.integrations.flask_client import OAuth
 
@@ -39,7 +40,16 @@ yahoo = oauth.register(
 
 # Caminho absoluto para o banco de dados
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DB_NAME = os.path.join(BASE_DIR, "lumina.db")
+# No Vercel, o sistema de arquivos é read-only, exceto /tmp
+if os.environ.get('VERCEL'):
+    DB_NAME = "/tmp/lumina.db"
+    # Copia o banco inicial para /tmp se ele não existir lá
+    if not os.path.exists(DB_NAME):
+        source_db = os.path.join(BASE_DIR, "lumina.db")
+        if os.path.exists(source_db):
+            shutil.copy2(source_db, DB_NAME)
+else:
+    DB_NAME = os.path.join(BASE_DIR, "lumina.db")
 
 def hash_senha(senha):
     return hashlib.sha256(senha.encode()).hexdigest()
