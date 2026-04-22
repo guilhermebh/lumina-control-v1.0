@@ -283,10 +283,9 @@ input::placeholder, textarea::placeholder { color: var(--text-muted); opacity: 0
 .status-msg.success { background: rgba(52,211,153,0.1); color: var(--success); border: 1px solid rgba(52,211,153,0.2); }
 .status-msg.error { background: rgba(248,113,113,0.1); color: var(--danger); border: 1px solid rgba(248,113,113,0.2); }
 
-/* ─── Contact Page Premium ─── */
-.contact-page {
+/* ─── Premium Pages (Login, Contato, Agendamento) ─── */
+.premium-page {
     min-height: 100vh;
-    background: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=2064');
     background-size: cover;
     background-position: center;
     position: relative;
@@ -294,17 +293,19 @@ input::placeholder, textarea::placeholder { color: var(--text-muted); opacity: 0
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 40px 20px;
+    padding: 60px 20px;
+    overflow-x: hidden;
 }
 
-.contact-page::before {
+.premium-page::before {
     content: '';
     position: absolute;
     inset: 0;
     background: radial-gradient(circle at center, rgba(15,15,19,0.7) 0%, rgba(15,15,19,0.95) 100%);
+    z-index: 1;
 }
 
-.contact-card {
+.premium-card {
     position: relative;
     z-index: 2;
     background: rgba(255,255,255,0.02);
@@ -318,9 +319,9 @@ input::placeholder, textarea::placeholder { color: var(--text-muted); opacity: 0
     animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.contact-header { text-align: center; margin-bottom: 48px; }
-.contact-header h2 { font-size: 2.5rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 12px; }
-.contact-header p { color: var(--text-muted); font-size: 1rem; }
+.premium-header { text-align: center; margin-bottom: 48px; }
+.premium-header h2 { font-size: 2.5rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 12px; }
+.premium-header p { color: var(--text-muted); font-size: 1rem; }
 
 .minimal-form .form-group { margin-bottom: 32px; position: relative; }
 .minimal-form label { 
@@ -373,14 +374,11 @@ input::placeholder, textarea::placeholder { color: var(--text-muted); opacity: 0
     box-shadow: 0 15px 30px rgba(124,106,239,0.3);
 }
 
-/* ─── Login Page ─── */
 .login-wrapper {
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: radial-gradient(circle at top right, rgba(124,106,239,0.08), transparent),
-                radial-gradient(circle at bottom left, rgba(124,106,239,0.05), transparent);
     position: relative;
     overflow: hidden;
 }
@@ -446,11 +444,11 @@ input::placeholder, textarea::placeholder { color: var(--text-muted); opacity: 0
     background: rgba(255,255,255,0.02);
     backdrop-filter: blur(20px);
     border: 1px solid var(--border);
-    border-radius: 24px;
+    border-radius: 32px;
     width: 100%;
     max-width: 440px;
-    padding: 48px;
-    box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+    padding: 60px;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.6);
     position: relative;
 }
 
