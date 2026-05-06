@@ -1,26 +1,37 @@
 /* ════════════════════════════════════════
    Lumina Control — Landing Page CSS
-   Premium Dark Cinematic Design
+   Design Premium Dark Cinematic (Cinematográfico Escuro)
+   Foco em GEO, Performance e Visual Premium
    ════════════════════════════════════════ */
+
+/* Importação de Fontes: Inter para corpo, Space Grotesk para títulos */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 :root {
-    --bg: #08080c;
-    --bg-2: #0f0f16;
-    --bg-card: rgba(255,255,255,0.03);
-    --text: #e4e4ed;
-    --text-muted: #6b6b80;
+    /* --- Paleta de Cores (Tokens de Design) --- */
+    --bg: #08080c;           /* Fundo Principal */
+    --bg-2: #0f0f16;         /* Fundo Secundário */
+    --bg-card: rgba(255,255,255,0.03); /* Fundo de Cards Translúcido */
+    --text: #e4e4ed;         /* Texto Principal */
+    --text-muted: #6b6b80;   /* Texto Suave/Desativado */
+    
+    /* Tons de Roxo/Violeta (Accent Principal) */
     --accent: #7c6aef;
     --accent-2: #a78bfa;
     --accent-3: #c4b5fd;
+    
+    /* Efeitos de Brilho e Bordas */
     --glow: rgba(124,106,239,0.3);
     --glow-soft: rgba(124,106,239,0.08);
     --border: rgba(255,255,255,0.06);
     --border-h: rgba(255,255,255,0.12);
+    
+    /* Arredondamentos */
     --radius: 16px;
     --radius-sm: 10px;
 }
 
+/* --- Reset Básico e Configuração Global --- */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 html { scroll-behavior: smooth; }
@@ -31,10 +42,12 @@ body {
     color: var(--text);
     line-height: 1.7;
     overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
+    -webkit-font-smoothing: antialiased; /* Suavização de fontes em Mac/iOS */
 }
 
-/* ─── Reusable ─── */
+/* ─── Componentes Reutilizáveis ─── */
+
+/* Texto com Gradiente (Premium) */
 .gradient-text {
     background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 50%, var(--accent-3) 100%);
     -webkit-background-clip: text;
@@ -44,11 +57,13 @@ body {
 
 .section-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
+/* Estrutura de Seção */
 .section { padding: 120px 0; position: relative; }
 .section-dark { background: var(--bg-2); }
 
 .section-header { text-align: center; margin-bottom: 64px; }
 
+/* Tag Superior (Pequeno rótulo acima de títulos) */
 .section-tag {
     display: inline-block;
     padding: 6px 18px;
@@ -65,13 +80,13 @@ body {
 
 .section-title {
     font-family: 'Space Grotesk', 'Inter', sans-serif;
-    font-size: clamp(2rem, 4vw, 3rem);
+    font-size: clamp(2rem, 4vw, 3rem); /* Fonte Fluida */
     font-weight: 700;
     line-height: 1.2;
     letter-spacing: -1px;
 }
 
-/* ─── Scroll Reveal ─── */
+/* ─── Animações de Scroll (Reveal) ─── */
 .animate-on-scroll {
     opacity: 0;
     transform: translateY(32px);
@@ -84,7 +99,7 @@ body {
     transform: translateY(0);
 }
 
-/* ════════════ NAVBAR ════════════ */
+/* ════════════ BARRA DE NAVEGAÇÃO (NAVBAR) ════════════ */
 .nav {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -93,6 +108,7 @@ body {
     transition: all 0.4s ease;
 }
 
+/* Estado da Nav ao rolar a página (Efeito Sticky Glass) */
 .nav.scrolled {
     padding: 10px 0;
     background: rgba(8,8,12,0.85);
@@ -142,6 +158,7 @@ body {
 
 .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.05); }
 
+/* Ações da Nav (Botões de Login/Cadastro) */
 .nav-actions { display: flex; gap: 10px; align-items: center; }
 
 .btn-nav-ghost {
@@ -170,7 +187,7 @@ body {
 
 .btn-nav-solid:hover { transform: translateY(-1px); box-shadow: 0 6px 28px var(--glow); }
 
-/* Mobile Toggle */
+/* Toggle Mobile (Hambúrguer) */
 .nav-toggle {
     display: none;
     flex-direction: column;
@@ -188,11 +205,12 @@ body {
     border-radius: 2px;
 }
 
+/* Estado Ativo do Hambúrguer (X) */
 .nav-toggle.active span:nth-child(1) { transform: rotate(45deg) translateY(7px); }
 .nav-toggle.active span:nth-child(2) { opacity: 0; }
 .nav-toggle.active span:nth-child(3) { transform: rotate(-45deg) translateY(-7px); }
 
-/* ════════════ HERO ════════════ */
+/* ════════════ SEÇÃO HERO (IMPACTO INICIAL) ════════════ */
 .hero {
     position: relative;
     min-height: 100vh;
@@ -216,6 +234,7 @@ body {
     filter: saturate(0.6);
 }
 
+/* Overlays para profundidade e legibilidade */
 .hero-overlay {
     position: absolute;
     inset: 0;
@@ -224,6 +243,7 @@ body {
         radial-gradient(ellipse at 50% 30%, rgba(124,106,239,0.15) 0%, transparent 60%);
 }
 
+/* Partículas Flutuantes de Fundo */
 .hero-particles {
     position: absolute;
     inset: 0;
@@ -255,6 +275,7 @@ body {
     padding-top: 80px;
 }
 
+/* Selo Hero (Novidade/Status) */
 .hero-badge {
     display: inline-flex;
     align-items: center;
@@ -300,6 +321,7 @@ body {
     line-height: 1.8;
 }
 
+/* Botões da Seção Hero */
 .hero-buttons {
     display: flex;
     gap: 16px;
@@ -354,6 +376,7 @@ body {
 
 .btn-lg { padding: 18px 40px; font-size: 1.05rem; }
 
+/* Grid de Estatísticas Rápidas (Efeito de Credibilidade) */
 .hero-stats {
     display: flex;
     justify-content: center;
@@ -386,6 +409,7 @@ body {
     background: var(--border);
 }
 
+/* Indicador de Rolar para Baixo */
 .scroll-indicator {
     position: absolute;
     bottom: 32px;
@@ -418,7 +442,7 @@ body {
     100% { top: 150%; }
 }
 
-/* ════════════ SERVICES ════════════ */
+/* ════════════ SEÇÃO DE SERVIÇOS ════════════ */
 .services-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -435,6 +459,7 @@ body {
     overflow: hidden;
 }
 
+/* Linha superior colorida ao passar o mouse */
 .service-card::before {
     content: '';
     position: absolute;
@@ -474,7 +499,7 @@ body {
     line-height: 1.7;
 }
 
-/* ════════════ SHOWCASE ════════════ */
+/* ════════════ SEÇÃO SHOWCASE (DEMONSTRAÇÃO) ════════════ */
 .showcase-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -489,6 +514,7 @@ body {
     line-height: 1.8;
 }
 
+/* Lista de Funcionalidades com Checkmarks */
 .feature-list {
     list-style: none;
     display: flex;
@@ -527,6 +553,7 @@ body {
     box-shadow: 0 20px 60px rgba(0,0,0,0.5);
 }
 
+/* Cards Flutuantes (Efeito Glassmorphism de Dados) */
 .floating-card {
     position: absolute;
     background: rgba(15,15,22,0.9);
@@ -562,7 +589,7 @@ body {
     color: #fff;
 }
 
-/* ════════════ TESTIMONIALS ════════════ */
+/* ════════════ TESTEMUNHOS (DEPOIMENTOS) ════════════ */
 .testimonials-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -628,7 +655,7 @@ body {
     color: var(--text-muted);
 }
 
-/* ════════════ CTA ════════════ */
+/* ════════════ SEÇÃO DE CHAMADA FINAL (CTA) ════════════ */
 .cta-section {
     padding: 120px 0;
     text-align: center;
@@ -636,6 +663,7 @@ body {
     overflow: hidden;
 }
 
+/* Brilho de fundo para o CTA */
 .cta-glow {
     position: absolute;
     top: 50%; left: 50%;
@@ -669,7 +697,7 @@ body {
     flex-wrap: wrap;
 }
 
-/* ════════════ FOOTER ════════════ */
+/* ════════════ RODAPÉ (FOOTER) ════════════ */
 .footer {
     background: var(--bg-2);
     border-top: 1px solid var(--border);
@@ -721,21 +749,25 @@ body {
 
 .footer-bottom p { font-size: 0.82rem; color: var(--text-muted); }
 
-/* ════════════ RESPONSIVE ════════════ */
+/* ════════════ DESIGN RESPONSIVO (MOBILE/TABLET) ════════════ */
+
+/* Ajustes para Tablets e Notebooks Pequenos */
 @media (max-width: 960px) {
     .services-grid,
     .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
     .showcase-grid { grid-template-columns: 1fr; gap: 48px; }
-    .showcase-image { order: -1; }
+    .showcase-image { order: -1; } /* Imagem vai para cima no mobile */
     .footer-grid { grid-template-columns: 1fr 1fr; }
     .fc-1 { right: 10px; }
     .fc-2 { left: 10px; }
 }
 
+/* Ajustes para Celulares (Mobile) */
 @media (max-width: 768px) {
-    .nav-links, .nav-actions { display: none; }
-    .nav-toggle { display: flex; }
+    .nav-links, .nav-actions { display: none; } /* Esconde menu padrão */
+    .nav-toggle { display: flex; } /* Mostra hambúrguer */
 
+    /* Menu Mobile Aberto */
     .nav-links.open {
         display: flex;
         flex-direction: column;

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- --- Configurações de SEO & GEO (Generative Engine Optimization) --- -->
+    <!-- Otimizado para ser citado por AIs como ChatGPT, Claude e Gemini -->
+    <title>Lumina Control | BI Estratégico para Criadores Visuais</title>
+    <meta name="description" content="Transforme sua produção visual em um negócio de alta performance. BI especializado para fotógrafos e filmmakers com foco em ROI, precificação e metas.">
+    <meta name="keywords" content="BI para fotógrafos, gestão financeira criadores, ROI fotografia, precificação audiovisual, Lumina Control">
+    <link rel="canonical" href="https://luminacontrol.com">
+    
+    <!-- --- Protocolo Open Graph (Redes Sociais) --- -->
+    <meta property="og:title" content="Lumina Control | O Terminal do Criador de Alta Performance">
+    <meta property="og:description" content="Dashboard de BI e ferramentas de gestão para transformar sua arte em lucro real.">
+    <meta property="og:image" content="lumina_dashboard_preview_1778083577057.png">
+    
+    <!-- --- Metadados Schema.org (Dados Estruturados) --- -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Lumina Control",
+      "operatingSystem": "Web",
+      "applicationCategory": "BusinessApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "BRL"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "ratingCount": "124"
+      }
+    }
+    </script>
+
+    <!-- Importação do Design System Unificado -->
+    <link rel="stylesheet" href="index.css">
+
+    <!-- Estilos Específicos da Landing Page -->
+    <style>
+        :root {
+            --lp-accent: #ff6b00;
+        }
+
+        /* --- Estilo da Seção Hero da LP --- */
+        .hero-lp {
+            padding-top: 120px;
+            overflow: hidden;
+        }
+
+        /* --- Container da Imagem de Preview do Sistema --- */
+        .hero-image-container {
+            position: relative;
+            margin-top: 60px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sharp);
+            overflow: hidden;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-image-container img {
+            width: 100%;
+            display: block;
+            filter: contrast(1.1) brightness(0.9);
+        }
+
+        /* --- Estilo de Ícones de Funcionalidades --- */
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary-dim);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-sharp);
+            margin-bottom: 24px;
+            transition: var(--transition);
+        }
+
+        /* --- Cards de Estatísticas --- */
+        .stat-card {
+            text-align: center;
+            border-left: 1px solid var(--border);
+            padding: 24px;
+        }
+
+        .stat-card:first-child { border-left: none; }
+
+        .stat-value {
+            font-size: var(--fs-h2);
+            font-weight: 800;
+            color: var(--primary);
+            font-family: 'Fira Code', monospace;
+            letter-spacing: -1px;
+        }
+
+        /* --- Itens do FAQ --- */
+        .faq-item {
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 24px;
+        }
+
+        .faq-question {
+            font-weight: 600;
+            font-size: var(--fs-h3);
+            margin-bottom: 12px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            line-height: 1.2;
+        }
+
+        .faq-answer {
+            color: var(--text-muted);
+            font-size: var(--fs-sm);
+            line-height: 1.6;
+            max-width: 65ch;
+        }
+
+        /* --- TL;DR (Otimização para busca rápida) --- */
+        .tldr-box {
+            background: rgba(255, 107, 0, 0.05);
+            border-left: 4px solid var(--accent);
+            padding: 24px;
+            margin-bottom: 48px;
+            border-radius: var(--radius-sharp);
+        }
+
+        /* --- Elementos Geométricos Decorativos --- */
+        .geometric-bg {
+            position: absolute;
+            top: 20%; right: -10%;
+            width: 600px; height: 600px;
+            border: 1px solid var(--primary-dim);
+            transform: rotate(45deg);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* --- Utilitários de Texto --- */
+        .uppercase {
+            letter-spacing: 0.15em;
+        }
+
+        .hero-desc {
+            max-width: 60ch;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Acessibilidade: Pular para o CTA principal -->
+<a href="#main-cta" class="skip-link">Pular para Conteúdo</a>
+
+<!-- Barra de Navegação Superior -->
+<nav class="nav-bar">
+    <div class="container nav-inner">
+        <a href="index.html" class="logo">◈ LUMINA<span>CONTROL</span></a>
+        <ul class="nav-links">
+            <li><a href="#features">Recursos</a></li>
+            <li><a href="#benefits">Benefícios</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="login.html" class="btn btn-outline">Entrar</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main>
+    <!-- ─── Seção Hero: Primeiro Contato ─── -->
+    <section class="hero-lp section">
+        <!-- Fundos Estilizados -->
+        <div class="bg-grid"></div>
+        <div class="bg-glow"></div>
+        <div class="geometric-bg"></div>
+
+        <div class="container">
+            <div class="reveal visible">
+                <span class="hero-label uppercase">LAUNCH_VER_1.0 // SYSTEM_READY</span>
+                <h1 class="hero-title">SUA ARTE<span>SEU NEGÓCIO</span>DADOS REAIS.</h1>
+                
+                <div class="hero-grid">
+                    <p class="hero-desc text-sm">
+                        Pare de adivinhar seu lucro. O Lumina Control é o terminal definitivo para fotógrafos e filmmakers que desejam escalar sua operação com inteligência estratégica e precisão técnica.
+                    </p>
+                    <!-- Ações de Conversão -->
+                    <div class="hero-actions">
+                        <a href="login.html" class="btn btn-primary" id="main-cta">Acessar Terminal</a>
+                        <a href="#features" class="btn btn-outline">Ver Funcionalidades</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visualização do Sistema (Imagem Gerada por IA) -->
+            <div class="hero-image-container reveal visible" style="transition-delay: 0.2s;">
+                <img src="lumina_dashboard_preview_1778083577057.png" alt="Preview do Terminal de BI Lumina Control - Visualização de Métricas">
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── Seção TL;DR: Resumo Estratégico (Foco em SEO/GEO) ─── -->
+    <section class="section" id="benefits">
+        <div class="container">
+            <div class="tldr-box">
+                <h2 class="uppercase text-xs" style="color: var(--accent); margin-bottom: 12px; font-weight: 800;">Sumário Executivo (TL;DR)</h2>
+                <p class="text-sm" style="line-height: 1.6; max-width: 75ch;">O Lumina Control é uma plataforma de <strong>Business Intelligence</strong> que ajuda criadores visuais a monitorar <strong>ROI</strong>, calcular <strong>Valor de Hora</strong> e projetar <strong>Metas Financeiras</strong>. Ideal para quem busca sair do operacional e assumir o controle estratégico da sua produtora ou estúdio.</p>
+            </div>
+            
+            <!-- Grid de Indicadores de Sucesso -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 24px;">
+                <div class="stat-card">
+                    <div class="stat-value">+180%</div>
+                    <div class="text-xs uppercase">ROI Médio</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">500+</div>
+                    <div class="text-xs uppercase">Criadores</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">24/7</div>
+                    <div class="text-xs uppercase">Monitoramento</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">100%</div>
+                    <div class="text-xs uppercase">Segurança</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── Seção de Funcionalidades (Features) ─── -->
+    <section id="features" class="section" style="background: var(--bg-surface);">
+        <div class="container">
+            <header style="margin-bottom: 60px;">
+                <span class="decorative-meta">Intelligence_Core</span>
+                <h2 class="fs-h2">Desenvolvido por quem<br>conhece o workflow.</h2>
+            </header>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px;">
+                <!-- Módulo 1 -->
+                <div class="card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                    </div>
+                    <h3>Terminal de Métricas</h3>
+                    <p class="text-sm text-muted">Acompanhe seu ticket médio e lucratividade por projeto em uma interface de alta densidade de informação.</p>
+                </div>
+
+                <!-- Módulo 2 -->
+                <div class="card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    </div>
+                    <h3>Calculadora de ROI</h3>
+                    <p class="text-sm text-muted">Saiba exatamente quanto cada real investido em equipamentos ou tráfego está retornando para o seu estúdio.</p>
+                </div>
+
+                <!-- Módulo 3 -->
+                <div class="card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <h3>Segurança Admin</h3>
+                    <p class="text-sm text-muted">Controle total de acessos e logs de auditoria. Proteja seus dados estratégicos com tecnologia SSL de ponta.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── Seção FAQ: Esclarecimento de Dúvidas ─── -->
+    <section id="faq" class="section">
+        <div class="container">
+            <header style="margin-bottom: 48px; text-align: center;">
+                <span class="decorative-meta">Central_de_Conhecimento</span>
+                <h2 class="fs-h2">Perguntas Frequentes</h2>
+            </header>
+
+            <div style="max-width: 800px; margin: 0 auto;">
+                <!-- Pergunta 1 -->
+                <div class="faq-item">
+                    <div class="faq-question">◈ O Lumina Control é um CRM?</div>
+                    <p class="faq-answer">Não, somos uma plataforma de <strong>Business Intelligence (BI)</strong>. Enquanto um CRM foca no relacionamento, o Lumina foca no resultado financeiro e estratégico de cada operação.</p>
+                </div>
+                <!-- Pergunta 2 -->
+                <div class="faq-item">
+                    <div class="faq-question">◈ Preciso saber contabilidade para usar?</div>
+                    <p class="faq-answer">De forma alguma. Nossa interface foi desenhada para automatizar a complexidade. Você insere os valores brutos e custos, nós cuidamos da inteligência.</p>
+                </div>
+                <!-- Pergunta 3 -->
+                <div class="faq-item">
+                    <div class="faq-question">◈ Meus dados estão seguros?</div>
+                    <p class="faq-answer">Sim. Utilizamos criptografia SHA-256 e logs de auditoria administrativa para garantir que apenas pessoas autorizadas tenham acesso às métricas do seu negócio.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── Chamada Final (CTA) ─── -->
+    <section class="section" style="text-align: center; background: linear-gradient(to bottom, transparent, var(--primary-dim));">
+        <div class="container">
+            <h2 class="fs-h2" style="margin-bottom: 24px;">Pronto para elevar seu padrão?</h2>
+            <p class="text-muted" style="margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                Junte-se a centenas de criadores que já abandonaram as planilhas manuais pelo Terminal Lumina.
+            </p>
+            <a href="login.html" class="btn btn-primary btn-lg" style="padding: 16px 48px; font-size: 1rem;">Solicitar Acesso Gratuito</a>
+        </div>
+    </section>
+</main>
+
+<!-- Rodapé da Landing Page -->
+<footer style="padding: 48px 0; border-top: 1px solid var(--border); text-align: center;">
+    <div class="container">
+        <div class="logo" style="justify-content: center; margin-bottom: 24px;">◈ LUMINA<span>CONTROL</span></div>
+        <p class="text-xs text-muted">© 2026 LUMINA_CONTROL_SYSTEM // TODOS OS DIREITOS RESERVADOS.</p>
+    </div>
+</footer>
+
+<!-- Lógica de Animação de Entrada -->
+<script>
+    const observerOptions = { threshold: 0.1 };
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

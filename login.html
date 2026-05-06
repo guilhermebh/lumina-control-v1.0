@@ -3,135 +3,314 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Lumina Control - Acesse seu painel de resultados">
-    <title>Lumina Control | Login</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="description" content="Lumina Control - Autenticação de Sistema">
+    <title>Lumina Control | Autenticação</title>
+    <!-- Importação do Estilo Base -->
+    <link rel="stylesheet" href="index.css">
+    
+    <style>
+        /* --- Abas de Navegação entre Fluxos de Autenticação --- */
+        .auth-tabs {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 32px;
+            border-bottom: 1px solid var(--border);
+        }
+        .auth-tab {
+            padding: 12px 0;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: var(--fs-sm);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid transparent;
+            transition: var(--transition);
+        }
+        .auth-tab.active {
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        /* --- Controle de Exibição das Seções --- */
+        .auth-section {
+            display: none;
+        }
+        .auth-section.active {
+            display: block;
+        }
+        
+        /* --- Links de Rodapé da Autenticação --- */
+        .auth-footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 24px;
+            text-align: center;
+        }
+        .auth-footer-links a {
+            font-size: var(--fs-xs);
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .auth-footer-links a:hover {
+            color: var(--primary);
+        }
+    </style>
 </head>
-<body>
+<body class="login-wrapper">
 
-<div class="login-wrapper">
-    <div class="login-split">
-        <!-- Lado Imersivo (Imagem Abstrata) -->
-        <div class="login-image-side">
-            <div class="login-image-content">
-                <span class="badge-premium">Inteligência de Dados</span>
-                <h2>Sua visão de negócios, <br>agora em alta definição.</h2>
-                <p>Minimalismo e precisão para quem decide. Acesse sua plataforma de controle Lumina.</p>
-            </div>
+<!-- Link de acessibilidade para pular direto para o formulário -->
+<a href="#login-section" class="skip-link">Pular para o login</a>
+
+<!-- Efeitos Visuais de Fundo -->
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+
+<!-- Caixa de Autenticação Centralizada -->
+<div class="login-box reveal visible" style="max-width: 450px;">
+    <header class="login-header">
+        <!-- Logotipo com Link para Home -->
+        <a href="index.html" class="logo" style="justify-content: center; margin-bottom: 24px;" aria-label="Voltar para Home">
+            ◈ LUMINA<span>CONTROL</span>
+        </a>
+        
+        <!-- Menu de Troca entre Login, Cadastro e Solicitação -->
+        <div class="auth-tabs">
+            <div class="auth-tab active" onclick="switchAuth('login')">Entrar</div>
+            <div class="auth-tab" onclick="switchAuth('register')">Cadastrar</div>
+            <div class="auth-tab" onclick="switchAuth('request')">Solicitar</div>
         </div>
+    </header>
 
-        <!-- Lado do Formulário -->
-        <div class="login-form-side">
-            <div class="login-box">
-                <header class="login-header">
-                    <div class="logo-minimal">
-                        <div class="logo-symbol"></div>
-                        <h1>Lumina</h1>
-                    </div>
-                    <p class="login-subtitle">Bem-vindo de volta. Identifique-se para continuar.</p>
-                </header>
-
-                <form id="login-form" class="minimal-form">
-                    <div class="form-group">
-                        <label for="email">E-mail Corporativo</label>
-                        <div class="input-wrapper">
-                            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                            <input type="email" id="email" name="email" placeholder="nome@empresa.com" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="label-row">
-                            <label for="senha">Senha de Acesso</label>
-                            <a href="#" class="forgot-link">Esqueceu?</a>
-                        </div>
-                        <div class="input-wrapper">
-                            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-11V7a4 4 0 00-8 0v4h8z"/></svg>
-                            <input type="password" id="senha" name="senha" placeholder="••••••••" required>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn-primary-minimal">
-                        <span>Acessar Dashboard</span>
-                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-7-7l7 7-7 7"/></svg>
-                    </button>
-                </form>
-
-                <div id="mensagem" class="message"></div>
-
-                <div class="divider">
-                    <span>Acesso Rápido</span>
+    <!-- ─── FLUXO 1: Login de Usuário Existente ─── -->
+    <div id="login-section" class="auth-section active">
+        <form id="login-form" aria-label="Formulário de Login">
+            <div class="form-group">
+                <label for="email-login">E-mail Corporativo</label>
+                <div class="input-wrapper">
+                    <!-- Ícone SVG de E-mail -->
+                    <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    <input type="email" id="email-login" name="email" placeholder="seu@empresa.com" required>
                 </div>
-
-                <div class="social-login-grid">
-                    <button type="button" class="social-item" onclick="window.location.href='/login/google'">
-                        <svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.27.81-.57z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.66l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
-                        <span>Google</span>
-                    </button>
-                    <button type="button" class="social-item" onclick="window.location.href='/login/yahoo'">
-                        <svg viewBox="0 0 24 24"><path d="M4.14 2H7.2L12 11.45 16.8 2H19.86L13.56 14.1V22H10.44V14.1L4.14 2Z" fill="#6001d2"/></svg>
-                        <span>Yahoo</span>
-                    </button>
-                </div>
-
-                <footer class="login-box-footer">
-                    <p>Novo por aqui? <a href="contato.html">Solicite acesso</a></p>
-                    <nav class="footer-nav">
-                        <a href="index.html">Início</a>
-                        <a href="agendamento.html">Agenda</a>
-                    </nav>
-                </footer>
             </div>
+
+            <div class="form-group">
+                <label for="senha-login">Senha de Acesso</label>
+                <div class="input-wrapper">
+                    <!-- Ícone SVG de Tranca -->
+                    <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    <input type="password" id="senha-login" name="senha" placeholder="••••••••" required>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                <span>Acessar Terminal</span>
+            </button>
+        </form>
+        <div class="auth-footer-links">
+            <a href="#" onclick="switchAuth('recover')">Esqueceu sua senha?</a>
         </div>
     </div>
+
+    <!-- ─── FLUXO 2: Cadastro de Novo Usuário (Auto-serviço) ─── -->
+    <div id="register-section" class="auth-section">
+        <form id="register-form" aria-label="Formulário de Cadastro">
+            <div class="form-group">
+                <label for="nome-reg">Nome Completo</label>
+                <div class="input-wrapper">
+                    <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <input type="text" id="nome-reg" name="nome" placeholder="Nome completo" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email-reg">E-mail Corporativo</label>
+                <div class="input-wrapper">
+                    <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    <input type="email" id="email-reg" name="email" placeholder="seu@empresa.com" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="senha-reg">Nova Senha</label>
+                <div class="input-wrapper">
+                    <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    <input type="password" id="senha-reg" name="senha" placeholder="••••••••" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                <span>Criar Conta</span>
+            </button>
+        </form>
+    </div>
+
+    <!-- ─── FLUXO 3: Solicitação de Acesso Especial (B2B/Admin) ─── -->
+    <div id="request-section" class="auth-section">
+        <form id="request-form" aria-label="Formulário de Solicitação">
+            <p class="text-sm text-muted" style="margin-bottom: 20px;">Ideal para agências ou contas corporativas sob medida.</p>
+            <div class="form-group">
+                <label for="nome-req">Nome da Empresa / Profissional</label>
+                <input type="text" id="nome-req" placeholder="Ex: Lumina Agency" required>
+            </div>
+            <div class="form-group">
+                <label for="email-req">E-mail para Contato</label>
+                <input type="email" id="email-req" placeholder="contato@empresa.com" required>
+            </div>
+            <div class="form-group">
+                <label for="motivo-req">Objetivo do Uso</label>
+                <textarea id="motivo-req" placeholder="Descreva brevemente sua necessidade..." style="min-height:80px;"></textarea>
+            </div>
+            <button type="submit" class="btn btn-outline" style="width: 100%; justify-content: center;">
+                <span>Enviar Solicitação</span>
+            </button>
+        </form>
+    </div>
+
+    <!-- ─── FLUXO 4: Recuperação de Senha ─── -->
+    <div id="recover-section" class="auth-section">
+        <form id="recover-form">
+            <h3 class="text-sm uppercase" style="margin-bottom: 12px; color: var(--primary);">Recuperar Acesso</h3>
+            <p class="text-xs text-muted" style="margin-bottom: 20px;">Enviaremos um link de redefinição para o seu e-mail cadastrado.</p>
+            <div class="form-group">
+                <label for="email-recover">E-mail Cadastrado</label>
+                <input type="email" id="email-recover" placeholder="seu@email.com" required>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                <span>Enviar Link</span>
+            </button>
+            <div class="auth-footer-links">
+                <a href="#" onclick="switchAuth('login')">Voltar ao Login</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Mensagens de Status (Feedback do Servidor) -->
+    <div id="auth-status" class="message"></div>
+
+    <footer class="login-footer" style="margin-top: 32px; border-top: 1px solid var(--border); padding-top: 24px;">
+        <div style="display: flex; align-items: center; justify-content: center; gap: 8px; color: var(--primary); font-size: 0.7rem; opacity: 0.7;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <span class="uppercase">Ambiente Criptografado SSL</span>
+        </div>
+    </footer>
 </div>
 
+<!-- ─── Lógica de Comportamento de Autenticação ─── -->
 <script>
-    const API_URL = 'http://127.0.0.1:5000';
-    const form = document.getElementById('login-form');
-    const mensagemDiv = document.getElementById('mensagem');
+    // Alterna a exibição entre as seções de Login, Cadastro, Solicitação e Recuperação
+    function switchAuth(type) {
+        document.querySelectorAll('.auth-section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+        
+        const section = document.getElementById(`${type}-section`);
+        if(section) section.classList.add('active');
+        
+        const tabs = document.querySelectorAll('.auth-tab');
+        if(type === 'login') tabs[0].classList.add('active');
+        if(type === 'register') tabs[1].classList.add('active');
+        if(type === 'request') tabs[2].classList.add('active');
+    }
 
-    form.addEventListener('submit', async (e) => {
+    // Exibe mensagens de sucesso ou erro para o usuário
+    const showMsg = (text, isSuccess) => {
+        const msg = document.getElementById('auth-status');
+        msg.textContent = text;
+        msg.className = `message ${isSuccess ? 'success' : 'error'}`;
+        setTimeout(() => msg.className = 'message', 5000);
+    };
+
+    // Submissão: Login
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
         e.preventDefault();
-
-        const email = document.getElementById('email').value;
-        const senha = document.getElementById('senha').value;
-        const btn = form.querySelector('.btn-primary-minimal');
-
-        btn.disabled = true;
-        const originalText = btn.querySelector('span').textContent;
-        btn.querySelector('span').textContent = 'Validando...';
-
+        const email = document.getElementById('email-login').value;
+        const senha = document.getElementById('senha-login').value;
+        
         try {
-            const response = await fetch(`${API_URL}/login`, {
+            const resp = await fetch('http://127.0.0.1:5000/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, senha }),
-                credentials: 'include'
+                body: JSON.stringify({ email, senha })
             });
-
-            const dados = await response.json();
-
-            if (response.ok) {
-                mensagemDiv.className = 'message success';
-                mensagemDiv.textContent = '✅ Autenticação confirmada.';
-                setTimeout(() => {
-                    window.location.href = 'dashboard.html';
-                }, 1000);
+            const data = await resp.json();
+            if(data.sucesso) {
+                window.location.href = 'dashboard.html';
             } else {
-                mensagemDiv.className = 'message error';
-                mensagemDiv.textContent = `❌ ${dados.error || 'Acesso negado'}`;
+                showMsg(data.error || 'Erro ao entrar', false);
             }
-        } catch (error) {
-            mensagemDiv.className = 'message error';
-            mensagemDiv.textContent = '❌ Falha de comunicação com o servidor';
-            console.error('Erro:', error);
-        } finally {
-            btn.disabled = false;
-            btn.querySelector('span').textContent = originalText;
+        } catch (err) {
+            showMsg('Erro de conexão com o servidor', false);
+        }
+    });
+
+    // Submissão: Cadastro
+    document.getElementById('register-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const nome = document.getElementById('nome-reg').value;
+        const email = document.getElementById('email-reg').value;
+        const senha = document.getElementById('senha-reg').value;
+        
+        try {
+            const resp = await fetch('http://127.0.0.1:5000/registrar', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nome, email, senha })
+            });
+            const data = await resp.json();
+            if(data.sucesso) {
+                showMsg('Conta criada! Você já pode entrar.', true);
+                setTimeout(() => switchAuth('login'), 2000);
+            } else {
+                showMsg(data.error || 'Erro ao registrar', false);
+            }
+        } catch (err) {
+            showMsg('Erro de conexão', false);
+        }
+    });
+
+    // Submissão: Solicitação de Acesso (Administrativo)
+    document.getElementById('request-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const nome = document.getElementById('nome-req').value;
+        const email = document.getElementById('email-req').value;
+        const motivo = document.getElementById('motivo-req').value;
+        
+        try {
+            const resp = await fetch('http://127.0.0.1:5000/solicitar-acesso', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nome, email, motivo })
+            });
+            const data = await resp.json();
+            if(data.sucesso) {
+                showMsg('Solicitação enviada com sucesso!', true);
+                e.target.reset();
+            } else {
+                showMsg(data.error || 'Erro ao enviar', false);
+            }
+        } catch (err) {
+            showMsg('Erro de conexão', false);
+        }
+    });
+
+    // Submissão: Recuperação de Senha
+    document.getElementById('recover-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('email-recover').value;
+        try {
+            const resp = await fetch('http://127.0.0.1:5000/recuperar-senha', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email })
+            });
+            const data = await resp.json();
+            if(data.sucesso) {
+                showMsg(data.message, true);
+            } else {
+                showMsg(data.error || 'Erro ao processar', false);
+            }
+        } catch (err) {
+            showMsg('Erro de conexão', false);
         }
     });
 </script>
-
 </body>
 </html>

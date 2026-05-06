@@ -1,0 +1,563 @@
+/* 
+   LuminaProject - Sistema de Design Unificado 
+   Estética: Premium Technical, Geometria Afiada, Alto Contraste
+   Regras: Purple Ban aplicado (sem tons de roxo).
+*/
+
+/* --- Importação de Fontes --- */
+/* Outfit para leitura geral e Fira Code para dados técnicos */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Outfit:wght@300;400;600;800&display=swap');
+
+:root {
+    /* --- Cores Principais --- */
+    /* Cyan Técnico (Primária) e Laranja de Segurança (Destaque) */
+    --primary: #00f2ff;
+    --primary-dim: rgba(0, 242, 255, 0.15);
+    --accent: #ff6b00;
+    --accent-dim: rgba(255, 107, 0, 0.15);
+    
+    /* --- Tons de Fundo --- */
+    --bg-main: #0a0a0c;
+    --bg-surface: #121216;
+    --bg-card: #18181f;
+    
+    /* --- Tipografia e Bordas --- */
+    --text-main: #f0f0f0;
+    --text-muted: #a0a0a0;
+    --border: rgba(255, 255, 255, 0.08);
+    
+    /* --- Escala de Fontes Fluida (clamp) --- */
+    /* Garante que o texto se ajuste automaticamente ao tamanho da tela */
+    --fs-xs: clamp(0.7rem, 0.65rem + 0.25vw, 0.8rem);
+    --fs-sm: clamp(0.85rem, 0.8rem + 0.25vw, 0.95rem);
+    --fs-base: clamp(1rem, 0.95rem + 0.25vw, 1.1rem);
+    --fs-h3: clamp(1.1rem, 1rem + 0.5vw, 1.3rem);
+    --fs-h2: clamp(1.5rem, 1.25rem + 1vw, 2.5rem);
+    --fs-h1: clamp(2.5rem, 2rem + 3vw, 5rem);
+    
+    /* --- Variáveis de Layout --- */
+    --radius-sharp: 4px;
+    --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.5);
+    --shadow-glow: 0 0 30px rgba(0, 242, 255, 0.1);
+}
+
+/* ─── Configurações Base ─── */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    font-family: 'Outfit', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+}
+
+/* --- Acessibilidade: Link de Pulo --- */
+/* Permite que usuários de teclado pulem a navegação repetitiva */
+.skip-link {
+    position: absolute;
+    top: -100px;
+    left: 0;
+    background: var(--primary);
+    color: var(--bg-main);
+    padding: 8px 16px;
+    z-index: 9999;
+    transition: top 0.3s;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* --- Acessibilidade: Estados de Foco --- */
+:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 4px;
+}
+
+/* --- Estilo de Cabeçalhos --- */
+h1, h2, h3, h4, .mono {
+    font-family: 'Fira Code', monospace;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* ─── Layout Geral ─── */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.section {
+    padding: 100px 0;
+    position: relative;
+}
+
+/* ─── Componentes de Interface ─── */
+
+/* --- Barra de Navegação --- */
+.nav-bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 80px;
+    background: rgba(5, 5, 8, 0.8);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    transition: var(--transition);
+}
+
+.nav-bar.scrolled {
+    height: 64px;
+    background: var(--bg-base);
+}
+
+.nav-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+/* --- Logotipo --- */
+.logo {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--primary);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logo span { color: var(--text-main); font-weight: 300; }
+
+/* --- Links de Navegação --- */
+.nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+}
+
+.nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: var(--transition);
+}
+
+.nav-links a:hover { color: var(--primary); }
+
+/* --- Botões Customizados --- */
+.btn {
+    padding: 12px 24px;
+    font-family: 'Fira Code', monospace;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: var(--radius-sharp);
+    text-decoration: none;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: #0a0a0c;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(0, 242, 255, 0.3);
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+}
+
+.btn-outline:hover {
+    background: var(--primary-dim);
+}
+
+/* --- Cards de Conteúdo --- */
+.card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 32px;
+    position: relative;
+    transition: var(--transition);
+    overflow: hidden;
+    box-shadow: var(--shadow-subtle);
+}
+
+.card:hover {
+    border-color: var(--primary);
+    box-shadow: var(--shadow-glow);
+    transform: translateY(-4px);
+}
+
+.card h3 {
+    font-size: var(--fs-h3);
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+}
+
+/* ─── Utilitários de Texto ─── */
+.mono { font-family: 'Fira Code', monospace; }
+.text-muted { color: var(--text-muted); }
+.text-xs { font-size: var(--fs-xs); }
+.text-sm { font-size: var(--fs-sm); }
+.uppercase { text-transform: uppercase; letter-spacing: 1px; }
+
+/* Metadados decorativos usados em cabeçalhos de seções */
+.decorative-meta {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.6rem;
+    color: var(--primary);
+    opacity: 0.3;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* ─── Seção Hero (Impacto Inicial) ─── */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding-top: 80px;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+}
+
+.hero-label {
+    color: var(--primary);
+    font-family: 'Fira Code', monospace;
+    font-size: 0.9rem;
+    margin-bottom: 16px;
+    display: block;
+}
+
+.hero-title {
+    font-size: clamp(3rem, 10vw, 8rem);
+    line-height: 0.9;
+    font-weight: 800;
+    margin-bottom: 24px;
+}
+
+.hero-title span {
+    display: block;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--primary);
+}
+
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: flex-end;
+}
+
+.hero-desc {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    max-width: 500px;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 40px;
+}
+
+/* --- Elementos de Fundo Imersivos --- */
+.hero-bg-wrap {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.hero-image-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, 
+        rgba(10, 10, 12, 0.4) 0%, 
+        rgba(10, 10, 12, 0.7) 50%, 
+        var(--bg-main) 100%
+    );
+    z-index: 2;
+}
+
+.hero-main-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.6;
+    filter: brightness(0.7) saturate(1.2);
+    transform: scale(1.05);
+    animation: slowZoom 20s infinite alternate ease-in-out;
+}
+
+@keyframes slowZoom {
+    from { transform: scale(1.05); }
+    to { transform: scale(1.15); }
+}
+
+.bg-decoration-img {
+    filter: hue-rotate(180deg) brightness(0.8);
+    animation: floatGear 10s infinite ease-in-out;
+}
+
+@keyframes floatGear {
+    0%, 100% { transform: rotate(15deg) translateY(0); }
+    50% { transform: rotate(20deg) translateY(-20px); }
+}
+
+/* --- Sistema de Partículas (Ambiente v1.0) --- */
+.particles-container {
+    position: absolute;
+    inset: 0;
+    z-index: 4; /* Acima do fundo, abaixo do texto */
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    background: var(--primary);
+    border-radius: 50%;
+    filter: blur(1px);
+    opacity: 0;
+    animation: particleUp 10s infinite ease-out;
+}
+
+@keyframes particleUp {
+    0% {
+        opacity: 0;
+        transform: translateY(100vh) scale(0.5);
+    }
+    20% {
+        opacity: 0.4;
+    }
+    80% {
+        opacity: 0.2;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-20vh) scale(1.2);
+    }
+}
+
+/* --- Elementos de Fundo Tradicionais --- */
+.bg-grid {
+    position: absolute;
+    inset: 0;
+    background-image: 
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 100px 100px;
+    z-index: 3; /* Acima da imagem hero, mas abaixo do conteúdo */
+    mask-image: radial-gradient(circle at center, black, transparent 80%);
+}
+
+.bg-glow {
+    position: absolute;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, var(--primary-dim) 0%, transparent 70%);
+    top: -100px; right: -100px;
+    z-index: 2;
+    filter: blur(80px);
+}
+
+/* ─── Animações de Entrada (Reveal) ─── */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ─── Estilos de Formulário ─── */
+.form-group {
+    margin-bottom: 24px;
+}
+
+.label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.7rem;
+    font-family: 'Outfit', sans-serif;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon {
+    position: absolute;
+    left: 12px;
+    width: 18px;
+    height: 18px;
+    color: var(--text-muted);
+    pointer-events: none;
+    transition: var(--transition);
+}
+
+input, textarea {
+    width: 100%;
+    padding: 12px 16px 12px 42px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sharp);
+    color: var(--text-main);
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: var(--transition);
+}
+
+textarea {
+    padding-left: 16px;
+    min-height: 100px;
+    resize: vertical;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 15px rgba(0, 242, 255, 0.1);
+}
+
+input:focus + .input-icon {
+    color: var(--primary);
+}
+
+/* ─── Estilos Específicos de Login ─── */
+.login-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    position: relative;
+}
+
+.login-box {
+    width: 100%;
+    max-width: 440px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 48px;
+    position: relative;
+    z-index: 10;
+}
+
+.login-box::before {
+    content: 'ACCESS_DENIED';
+    position: absolute;
+    top: -20px; right: -20px;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.6rem;
+    color: var(--primary);
+    opacity: 0.2;
+    letter-spacing: 4px;
+}
+
+.login-header {
+    margin-bottom: 32px;
+    text-align: center;
+}
+
+.divider {
+    text-align: center;
+    margin: 24px 0;
+    position: relative;
+}
+
+.divider::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 0; right: 0;
+    height: 1px;
+    background: var(--border);
+}
+
+.divider span {
+    background: var(--bg-card);
+    padding: 0 16px;
+    font-size: 0.7rem;
+    font-family: 'Fira Code', monospace;
+    color: var(--text-muted);
+    position: relative;
+}
+
+.message {
+    margin-top: 16px;
+    padding: 12px;
+    font-size: 0.85rem;
+    border-radius: var(--radius-sharp);
+    display: none;
+}
+
+.message.success {
+    display: block;
+    background: rgba(0, 255, 128, 0.1);
+    color: #00ff80;
+    border: 1px solid rgba(0, 255, 128, 0.2);
+}
+
+.message.error {
+    display: block;
+    background: rgba(255, 60, 60, 0.1);
+    color: #ff3c3c;
+    border: 1px solid rgba(255, 60, 60, 0.2);
+}

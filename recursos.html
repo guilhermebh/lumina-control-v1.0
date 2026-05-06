@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Lumina Control - Ferramentas de Inteligência para Criadores">
+    <title>Lumina Control | Recursos e Ferramentas</title>
+    <!-- Importação do Design System Unificado -->
+    <link rel="stylesheet" href="index.css">
+    
+    <style>
+        /* --- Grid de Ferramentas --- */
+        .tool-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 32px;
+            margin-top: 48px;
+        }
+        
+        /* Estilo dos Cards de Ferramentas */
+        .tool-card {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        /* Painel de Exibição de Resultados das Ferramentas */
+        .result-panel {
+            background: var(--primary-dim);
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            margin-top: 10px;
+        }
+        
+        /* Valor Numérico de Resultado */
+        .result-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+            font-family: 'Fira Code', monospace;
+        }
+    </style>
+</head>
+<body id="top">
+
+<!-- Acessibilidade: Pular navegação -->
+<a href="#main-content" class="skip-link">Pular para as ferramentas</a>
+
+<!-- Efeitos Visuais de Fundo -->
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+
+<!-- ─── Barra de Navegação (Navbar) ─── -->
+<nav class="nav-bar scrolled" id="navbar" aria-label="Navegação Principal">
+    <div class="container nav-inner">
+        <a href="index.html" class="logo" aria-label="Lumina Control Home">
+            ◈ LUMINA<span>CONTROL</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html#servicos">Serviços</a></li>
+            <li><a href="recursos.html" class="active">Recursos</a></li>
+            <li><a href="contato.html">Contato</a></li>
+        </ul>
+        <div class="nav-actions">
+            <a href="login.html" class="btn btn-primary">Acessar Painel</a>
+        </div>
+    </div>
+</nav>
+
+<main class="container section" id="main-content" style="padding-top: 120px;">
+    <!-- Cabeçalho da Seção de Recursos -->
+    <header class="reveal visible">
+        <span class="decorative-meta">Central de Recursos / V1.0</span>
+        <h1 class="hero-title" style="font-size: clamp(2.5rem, 5vw, 4rem);">FERRAMENTAS<span>DE DECISÃO</span></h1>
+        <p class="hero-desc" style="max-width: 700px;">Simuladores técnicos projetados para otimizar a rentabilidade da sua produção visual.</p>
+    </header>
+
+    <!-- ─── Grid de Ferramentas de BI ─── -->
+    <div class="tool-container">
+        
+        <!-- FERRAMENTA 01: Calculadora de ROI -->
+        <!-- Calcula o retorno financeiro baseado no valor de venda e custos -->
+        <div class="card tool-card reveal visible">
+            <div>
+                <div class="decorative-meta" style="margin-bottom: 8px;">BI_TOOL_01</div>
+                <h3>Calculadora de ROI</h3>
+                <p class="text-sm text-muted">Determine a viabilidade econômica de um projeto específico.</p>
+            </div>
+            
+            <div class="form-group">
+                <label for="roi-venda">Valor de Venda (R$)</label>
+                <input type="number" id="roi-venda" placeholder="Ex: 5000" oninput="calcularROI()">
+            </div>
+            <div class="form-group">
+                <label for="roi-custo">Custos Diretos (R$)</label>
+                <input type="number" id="roi-custo" placeholder="Ex: 1500" oninput="calcularROI()">
+            </div>
+            
+            <!-- Painel de Saída de Dados -->
+            <div class="result-panel">
+                <div class="text-xs uppercase" style="margin-bottom: 4px;">Retorno sobre Investimento</div>
+                <div class="result-value" id="roi-resultado">0%</div>
+                <div class="text-xs text-muted" id="roi-status">Aguardando dados...</div>
+            </div>
+        </div>
+
+        <!-- FERRAMENTA 02: Simulador de Valor de Hora -->
+        <!-- Ajuda o profissional a definir sua taxa horária com base em custos fixos -->
+        <div class="card tool-card reveal visible" style="transition-delay: 0.1s;">
+            <div>
+                <div class="decorative-meta" style="margin-bottom: 8px;">BI_TOOL_02</div>
+                <h3>Simulador de Hora</h3>
+                <p class="text-sm text-muted">Calcule quanto cobrar baseado em seus custos fixos.</p>
+            </div>
+            
+            <div class="form-group">
+                <label for="price-fixo">Custos Fixos Mensais (R$)</label>
+                <input type="number" id="price-fixo" placeholder="Ex: 3000" oninput="calcularPreco()">
+            </div>
+            <div class="form-group">
+                <label for="price-horas">Horas Produtivas / Mês</label>
+                <input type="number" id="price-horas" placeholder="Ex: 80" oninput="calcularPreco()">
+            </div>
+            
+            <div class="result-panel">
+                <div class="text-xs uppercase" style="margin-bottom: 4px;">Valor Sugerido / Hora</div>
+                <div class="result-value" id="price-resultado">R$ 0</div>
+                <div class="text-xs text-muted">Custo base operacional</div>
+            </div>
+        </div>
+
+        <!-- FERRAMENTA 03: Projetor de Metas -->
+        <!-- Calcula a quantidade de contratos necessários para atingir uma meta financeira -->
+        <div class="card tool-card reveal visible" style="transition-delay: 0.2s;">
+            <div>
+                <div class="decorative-meta" style="margin-bottom: 8px;">BI_TOOL_03</div>
+                <h3>Projetor de Metas</h3>
+                <p class="text-sm text-muted">Visualize o esforço necessário para atingir seu objetivo.</p>
+            </div>
+            
+            <div class="form-group">
+                <label for="meta-valor">Meta Mensal (R$)</label>
+                <input type="number" id="meta-valor" placeholder="Ex: 15000" oninput="calcularMeta()">
+            </div>
+            <div class="form-group">
+                <label for="meta-ticket">Ticket Médio (R$)</label>
+                <input type="number" id="meta-ticket" placeholder="Ex: 2500" oninput="calcularMeta()">
+            </div>
+            
+            <div class="result-panel">
+                <div class="text-xs uppercase" style="margin-bottom: 4px;">Jobs Necessários</div>
+                <div class="result-value" id="meta-resultado">0</div>
+                <div class="text-xs text-muted" id="meta-legenda">Contratos por mês</div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="section container" style="border-top: 1px solid var(--border); padding: 40px 0; margin-top: 80px;">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div class="logo" style="font-size: 1rem;">◈ LUMINA<span>CONTROL</span></div>
+        <div class="text-xs text-muted">© 2026 LUMINA_CONTROL. Ferramentas de uso consultivo.</div>
+    </div>
+</footer>
+
+<!-- ─── Funções de Cálculo das Ferramentas ─── -->
+<script>
+    // Lógica para Cálculo de ROI
+    function calcularROI() {
+        const venda = parseFloat(document.getElementById('roi-venda').value) || 0;
+        const custo = parseFloat(document.getElementById('roi-custo').value) || 0;
+        const res = document.getElementById('roi-resultado');
+        const status = document.getElementById('roi-status');
+        
+        if (venda > 0 && custo > 0) {
+            const roi = ((venda - custo) / custo) * 100;
+            res.textContent = roi.toFixed(1) + '%';
+            // Cor dinâmica baseada na performance
+            res.style.color = roi > 100 ? 'var(--primary)' : (roi > 50 ? 'var(--accent)' : '#ff4444');
+            status.textContent = roi > 100 ? 'ALTA RENTABILIDADE' : 'DENTRO DA MÉDIA';
+        } else {
+            res.textContent = '0%';
+            status.textContent = 'Aguardando dados...';
+        }
+    }
+
+    // Lógica para Cálculo de Valor de Hora
+    function calcularPreco() {
+        const fixo = parseFloat(document.getElementById('price-fixo').value) || 0;
+        const horas = parseFloat(document.getElementById('price-horas').value) || 0;
+        const res = document.getElementById('price-resultado');
+        
+        if (fixo > 0 && horas > 0) {
+            // Fórmula: (Custos Fixos * 1.5 de margem) / Horas Disponíveis
+            const valor = (fixo * 1.5) / horas; 
+            res.textContent = 'R$ ' + valor.toFixed(0);
+        } else {
+            res.textContent = 'R$ 0';
+        }
+    }
+
+    // Lógica para Cálculo de Metas
+    function calcularMeta() {
+        const meta = parseFloat(document.getElementById('meta-valor').value) || 0;
+        const ticket = parseFloat(document.getElementById('meta-ticket').value) || 0;
+        const res = document.getElementById('meta-resultado');
+        
+        if (meta > 0 && ticket > 0) {
+            const jobs = Math.ceil(meta / ticket);
+            res.textContent = jobs;
+        } else {
+            res.textContent = '0';
+        }
+    }
+
+    // Inicializa animações de revelação no scroll
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

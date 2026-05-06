@@ -1,353 +1,250 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Lumina Control - Plataforma de Business Intelligence para Fotógrafos e Filmmakers Profissionais">
+    <meta name="description"
+        content="Lumina Control - Plataforma de Business Intelligence para Fotógrafos e Filmmakers Profissionais">
     <title>Lumina Control | Inteligência para Criadores Visuais</title>
-    <link rel="stylesheet" href="landing.css">
+    <link rel="stylesheet" href="index.css">
 </head>
-<body>
 
-<!-- ═══════════ NAVBAR ═══════════ -->
-<nav class="nav" id="navbar">
-    <div class="nav-inner">
-        <a href="#" class="nav-logo">
-            <span class="logo-icon">◈</span> Lumina<span class="logo-light">Control</span>
-        </a>
-        <ul class="nav-links" id="nav-links">
-            <li><a href="#inicio">Início</a></li>
-            <li><a href="#servicos">Serviços</a></li>
-            <li><a href="#recursos">Recursos</a></li>
-            <li><a href="#depoimentos">Depoimentos</a></li>
-            <li><a href="#contato-section">Contato</a></li>
-        </ul>
-        <div class="nav-actions">
-            <a href="login.html" class="btn-nav-ghost">Entrar</a>
-            <a href="login.html" class="btn-nav-solid">Começar Grátis</a>
-        </div>
-        <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
-            <span></span><span></span><span></span>
-        </button>
-    </div>
-</nav>
+<body id="top">
 
-<!-- ═══════════ HERO ═══════════ -->
-<section class="hero" id="inicio">
-    <div class="hero-bg">
-        <img src="img/hero.png" alt="" class="hero-bg-img">
-        <div class="hero-overlay"></div>
-    </div>
-    <div class="hero-particles" id="particles"></div>
-    <div class="hero-content">
-        <div class="hero-badge animate-on-scroll">
-            <span class="badge-dot"></span>
-            Plataforma #1 para Criadores Visuais
-        </div>
-        <h1 class="hero-title animate-on-scroll">
-            Transforme sua<br>
-            <span class="gradient-text">Arte em Números</span>
-        </h1>
-        <p class="hero-desc animate-on-scroll">
-            Dashboard inteligente para fotógrafos e filmmakers que desejam
-            controlar ROI, ticket médio e crescimento — tudo em um só lugar.
-        </p>
-        <div class="hero-buttons animate-on-scroll">
-            <a href="login.html" class="btn-primary">
-                <span>Acessar Dashboard</span>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    <!-- Link de acessibilidade para usuários de teclado -->
+    <a href="#inicio" class="skip-link">Pular para o conteúdo</a>
+
+    <!-- Elementos visuais de fundo (Grid e Brilho) -->
+    <div class="bg-grid"></div>
+    <div class="bg-glow"></div>
+
+    <!-- ─── Barra de Navegação (Navbar) ─── -->
+    <nav class="nav-bar" id="navbar" aria-label="Navegação Principal">
+        <div class="container nav-inner">
+            <a href="#top" class="logo" aria-label="Lumina Control Home">
+                ◈ LUMINA<span>CONTROL v1.0</span>
             </a>
-            <a href="agendamento.html" class="btn-outline">Agendar Demonstração</a>
-        </div>
-        <div class="hero-stats animate-on-scroll">
-            <div class="hero-stat">
-                <strong id="counter-1">0</strong>
-                <span>Fotógrafos Ativos</span>
-            </div>
-            <div class="hero-stat-divider"></div>
-            <div class="hero-stat">
-                <strong id="counter-2">0</strong>
-                <span>Ensaios Gerenciados</span>
-            </div>
-            <div class="hero-stat-divider"></div>
-            <div class="hero-stat">
-                <strong>+42%</strong>
-                <span>Crescimento Médio</span>
+            <!-- Links de ancoragem para navegação interna -->
+            <ul class="nav-links">
+                <li><a href="#servicos">Serviços</a></li>
+                <li><a href="recursos.html">Recursos</a></li>
+                <li><a href="#contato">Contato</a></li>
+            </ul>
+            <!-- Ações principais: Login e Registro -->
+            <div class="nav-actions">
+                <a href="login.html" class="btn btn-outline">Entrar</a>
+                <a href="login.html" class="btn btn-primary">Começar</a>
             </div>
         </div>
-    </div>
-    <div class="scroll-indicator">
-        <div class="scroll-line"></div>
-    </div>
-</section>
+    </nav>
 
-<!-- ═══════════ SERVIÇOS ═══════════ -->
-<section class="section" id="servicos">
-    <div class="section-inner">
-        <div class="section-header animate-on-scroll">
-            <span class="section-tag">Serviços</span>
-            <h2 class="section-title">Tudo que você precisa para<br><span class="gradient-text">escalar seu negócio criativo</span></h2>
+    <!-- ─── Seção Hero: Impacto Inicial e Proposta de Valor ─── -->
+    <section class="hero" id="inicio">
+        <!-- Imagem de fundo imersiva -->
+        <div class="hero-bg-wrap">
+            <div class="hero-image-overlay"></div>
+            <img src="img/hero.png" alt="Lumina Control Hero" class="hero-main-img">
         </div>
-        <div class="services-grid">
-            <div class="service-card animate-on-scroll">
-                <div class="service-icon">📊</div>
-                <h3>Dashboard Inteligente</h3>
-                <p>Métricas em tempo real de ticket médio, ROI e volume de projetos com visualizações premium.</p>
+
+        <!-- Sistema de Partículas Dinâmico -->
+        <div class="particles-container" id="particles"></div>
+
+        <div class="container hero-content">
+            <span class="hero-label reveal">BUSINESS INTELLIGENCE PARA CRIADORES</span>
+            <h1 class="hero-title reveal">
+                SUA ARTE<span>EM NÚMEROS</span>
+            </h1>
+
+            <div class="hero-grid">
+                <!-- Descrição e CTAs Principais -->
+                <div class="reveal" style="transition-delay: 0.2s;">
+                    <p class="hero-desc">
+                        A plataforma técnica projetada para criadores visuais
+                        que transformam sua paixão em um <span class="text-primary">negócio de alto impacto</span>.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="login.html" class="btn btn-primary">Acessar Painel</a>
+                        <a href="agendamento.html" class="btn btn-outline">Agendar Consultoria</a>
+                    </div>
+                </div>
+
+                <!-- Card de demonstração de performance -->
+                <div class="reveal" style="transition-delay: 0.4s;">
+                    <div class="card" style="max-width: 320px; margin-left: auto; background: rgba(18, 18, 22, 0.7); backdrop-filter: blur(10px);">
+                        <div class="decorative-meta" style="margin-bottom: 8px;">Performance / Avg</div>
+                        <div style="font-size: 2.5rem; font-weight: 800;" class="text-primary">+42.8%</div>
+                        <div class="text-xs uppercase text-muted">Crescimento Mensal</div>
+                    </div>
+                </div>
             </div>
-            <div class="service-card animate-on-scroll">
-                <div class="service-icon">📈</div>
+        </div>
+    </section>
+
+    <!-- ─── Seção de Serviços: Módulos do Sistema ─── -->
+    <section class="section container" id="servicos">
+        <div class="reveal">
+            <h2 class="section-title" style="margin-bottom: 48px;">Serviços<span>Estratégicos</span></h2>
+        </div>
+
+        <div class="dashboard-grid"
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+            <!-- Card 1: Inteligência -->
+            <div class="card reveal" style="transition-delay: 0.1s;">
+                <div class="decorative-meta" style="margin-bottom: 16px;">BI_MODULE / 01</div>
+                <h3>Inteligência de Dados</h3>
+                <p class="text-sm text-muted" style="margin-top: 12px;">Visualização avançada de ticket médio e ROI em
+                    tempo real para tomada de decisão.</p>
+            </div>
+            <!-- Card 2: ROI -->
+            <div class="card reveal" style="transition-delay: 0.2s;">
+                <div class="decorative-meta" style="margin-bottom: 16px;">ANALYTICS / 02</div>
                 <h3>Análise de ROI</h3>
-                <p>Calcule automaticamente o retorno de cada ensaio e identifique seus serviços mais rentáveis.</p>
+                <p class="text-sm text-muted" style="margin-top: 12px;">Mapeamento detalhado de lucratividade por tipo
+                    de ensaio e perfil de cliente.</p>
             </div>
-            <div class="service-card animate-on-scroll">
-                <div class="service-icon">🎯</div>
-                <h3>Gestão de Clientes</h3>
-                <p>Portal exclusivo onde seus clientes acessam e compartilham resultados nas redes sociais.</p>
-            </div>
-            <div class="service-card animate-on-scroll">
-                <div class="service-icon">📅</div>
-                <h3>Agendamento Online</h3>
-                <p>Sistema integrado de agendamento para consultorias e sessões fotográficas.</p>
-            </div>
-            <div class="service-card animate-on-scroll">
-                <div class="service-icon">🎬</div>
-                <h3>Filmmakers Studio</h3>
-                <p>Ferramentas dedicadas para produtoras de vídeo — controle de budget, timeline e entregas.</p>
-            </div>
-            <div class="service-card animate-on-scroll">
-                <div class="service-icon">🔗</div>
-                <h3>Compartilhamento Social</h3>
-                <p>Seus clientes compartilham resultados direto no Facebook, Instagram e WhatsApp com um clique.</p>
+            <!-- Card 3: Experiência -->
+            <div class="card reveal" style="transition-delay: 0.3s;">
+                <div class="decorative-meta" style="margin-bottom: 16px;">CLIENT_HUB / 03</div>
+                <h3>Experiência Digital</h3>
+                <p class="text-sm text-muted" style="margin-top: 12px;">Interface exclusiva para entrega de resultados e
+                    colaboração com clientes.</p>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- ═══════════ SHOWCASE ═══════════ -->
-<section class="section section-dark" id="recursos">
-    <div class="section-inner">
-        <div class="showcase-grid">
-            <div class="showcase-text animate-on-scroll">
-                <span class="section-tag">Por que Lumina?</span>
-                <h2 class="section-title">Feito por criativos,<br><span class="gradient-text">para criativos</span></h2>
-                <p class="showcase-desc">
-                    Entendemos que seu tempo vale mais atrás das lentes do que em planilhas.
-                    O Lumina Control automatiza a inteligência de negócios para que você
-                    foque no que faz de melhor: criar.
+    <!-- ─── Seção de Recursos: Ferramentas Gratuitas ─── -->
+    <section class="section container" id="recursos" style="position: relative; overflow: hidden;">
+        <!-- Imagem decorativa de fundo (Gear) -->
+        <img src="img/gear.png" alt="" class="bg-decoration-img" style="position: absolute; right: -100px; bottom: -50px; width: 400px; opacity: 0.05; pointer-events: none; transform: rotate(15deg);">
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; position: relative; z-index: 2;">
+            <div class="reveal">
+                <span class="decorative-meta">BI_TOOLS / FREE_ACCESS</span>
+                <h2 class="section-title" style="margin-top: 16px;">Ferramentas<span>de Gestão</span></h2>
+                <p class="hero-desc" style="margin-top: 24px;">
+                    Acesse simuladores gratuitos projetados para fotógrafos e filmmakers validarem a saúde financeira de
+                    seus projetos em segundos.
                 </p>
-                <ul class="feature-list">
-                    <li>
-                        <span class="feature-check">✓</span>
-                        <span>Setup em menos de 5 minutos</span>
-                    </li>
-                    <li>
-                        <span class="feature-check">✓</span>
-                        <span>Integração com seu fluxo de trabalho</span>
-                    </li>
-                    <li>
-                        <span class="feature-check">✓</span>
-                        <span>Relatórios automáticos para seus clientes</span>
-                    </li>
-                    <li>
-                        <span class="feature-check">✓</span>
-                        <span>Suporte dedicado a profissionais</span>
-                    </li>
-                </ul>
-                <a href="dashboard.html" class="btn-primary" style="margin-top: 12px;">
-                    <span>Ver Dashboard Demo</span>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </a>
-            </div>
-            <div class="showcase-image animate-on-scroll">
-                <img src="img/gear.png" alt="Equipamento profissional de filmmaking">
-                <div class="floating-card fc-1">
-                    <span class="fc-label">ROI Médio</span>
-                    <span class="fc-value" style="color: #34d399;">+275%</span>
-                </div>
-                <div class="floating-card fc-2">
-                    <span class="fc-label">Ticket Médio</span>
-                    <span class="fc-value">R$ 5.200</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ═══════════ DEPOIMENTOS ═══════════ -->
-<section class="section" id="depoimentos">
-    <div class="section-inner">
-        <div class="section-header animate-on-scroll">
-            <span class="section-tag">Depoimentos</span>
-            <h2 class="section-title">Quem usa, <span class="gradient-text">recomenda</span></h2>
-        </div>
-        <div class="testimonials-grid">
-            <div class="testimonial-card animate-on-scroll">
-                <div class="testimonial-stars">★★★★★</div>
-                <p>"O Lumina mudou completamente minha visão sobre precificação. Consegui aumentar meu ticket médio em 60% em 3 meses."</p>
-                <div class="testimonial-author">
-                    <div class="author-avatar">JS</div>
-                    <div>
-                        <strong>João Silva</strong>
-                        <span>Fotógrafo de Casamentos</span>
+                <!-- Lista de ferramentas com marcadores técnicos -->
+                <div style="margin-top: 32px; display: flex; flex-direction: column; gap: 16px;">
+                    <div style="display: flex; gap: 12px; align-items: center;">
+                        <div style="width: 8px; height: 8px; background: var(--primary);"></div>
+                        <span class="text-sm uppercase">Calculadora de ROI de Projetos</span>
+                    </div>
+                    <div style="display: flex; gap: 12px; align-items: center;">
+                        <div style="width: 8px; height: 8px; background: var(--primary);"></div>
+                        <span class="text-sm uppercase">Simulador de Valor de Hora</span>
+                    </div>
+                    <div style="display: flex; gap: 12px; align-items: center;">
+                        <div style="width: 8px; height: 8px; background: var(--primary);"></div>
+                        <span class="text-sm uppercase">Projetor de Metas Mensais</span>
                     </div>
                 </div>
+                <a href="recursos.html" class="btn btn-outline" style="margin-top: 40px;">Explorar Ferramentas</a>
             </div>
-            <div class="testimonial-card animate-on-scroll">
-                <div class="testimonial-stars">★★★★★</div>
-                <p>"Como filmmaker, eu precisava entender quais projetos davam mais retorno. O dashboard me deu essa clareza instantaneamente."</p>
-                <div class="testimonial-author">
-                    <div class="author-avatar">MS</div>
-                    <div>
-                        <strong>Maria Santos</strong>
-                        <span>Produtora Audiovisual</span>
+
+            <!-- Preview Visual de uma métrica de BI -->
+            <div class="reveal" style="transition-delay: 0.2s;">
+                <div class="card"
+                    style="border-color: var(--primary-dim); background: linear-gradient(135deg, rgba(24, 24, 31, 0.8) 0%, rgba(26, 26, 36, 0.9) 100%); backdrop-filter: blur(10px);">
+                    <div class="decorative-meta" style="margin-bottom: 16px;">BI_PREVIEW / PROJECT_ALPHA</div>
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px;">
+                        <div>
+                            <div class="text-xs uppercase text-muted">ROI Estimado</div>
+                            <div style="font-size: 2.5rem; font-weight: 800; color: var(--primary);">+124%</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div class="text-xs uppercase text-muted">Status</div>
+                            <div class="text-xs uppercase" style="color: #44ff88;">Alta Rentabilidade</div>
+                        </div>
                     </div>
+                    <!-- Barra de progresso customizada -->
+                    <div style="height: 4px; width: 100%; background: var(--border); position: relative;">
+                        <div
+                            style="position: absolute; left: 0; top: 0; height: 100%; width: 75%; background: var(--primary);">
+                        </div>
+                    </div>
+                    <div class="text-xs text-muted" style="margin-top: 12px; text-align: center;">Simulação de
+                        performance baseada em dados reais</div>
                 </div>
             </div>
-            <div class="testimonial-card animate-on-scroll">
-                <div class="testimonial-stars">★★★★★</div>
-                <p>"Meus clientes adoram o portal de resultados. O compartilhamento social trouxe novos leads organicamente."</p>
-                <div class="testimonial-author">
-                    <div class="author-avatar">PO</div>
-                    <div>
-                        <strong>Pedro Oliveira</strong>
-                        <span>Fotógrafo Editorial</span>
-                    </div>
-                </div>
+        </div>
+    </section>
+
+    <!-- ─── Seção de Chamada para Ação (CTA) ─── -->
+    <section class="section" id="contato">
+        <div class="container">
+            <div class="card reveal" style="text-align: center; padding: 80px 40px; border-color: var(--accent); background: linear-gradient(180deg, var(--bg-card) 0%, rgba(255, 107, 0, 0.05) 100%);">
+                <h2 class="hero-title" style="font-size: 3rem; margin-bottom: 16px;">PRONTO PARA<span>ESCALAR?</span>
+                </h2>
+                <p class="hero-desc" style="margin: 0 auto 32px; max-width: 500px;">Assuma o controle total dos seus
+                    números e foque no que realmente importa: sua arte.</p>
+                <a href="login.html" class="btn btn-primary" style="background: var(--accent); color: white;">Iniciar
+                    Diagnóstico</a>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- ═══════════ CTA FINAL ═══════════ -->
-<section class="cta-section" id="contato-section">
-    <div class="cta-glow"></div>
-    <div class="section-inner" style="position: relative; z-index: 2;">
-        <div class="cta-content animate-on-scroll">
-            <h2 class="cta-title">Pronto para transformar seu<br><span class="gradient-text">negócio criativo?</span></h2>
-            <p class="cta-desc">Junte-se a centenas de fotógrafos e filmmakers que já usam o Lumina Control.</p>
-            <div class="cta-buttons">
-                <a href="login.html" class="btn-primary btn-lg">
-                    <span>Começar Agora — É Grátis</span>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </a>
-                <a href="contato.html" class="btn-outline">Falar com a Equipe</a>
-            </div>
+    <!-- ─── Rodapé (Footer) ─── -->
+    <footer class="section container" style="border-top: 1px solid var(--border); padding: 40px 0;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="logo" style="font-size: 1rem;">◈ LUMINA<span>CONTROL v1.0</span></div>
+            <div class="text-xs text-muted">© 2026 LUMINA_CONTROL. Todos os direitos reservados.</div>
         </div>
-    </div>
-</section>
+    </footer>
 
-<!-- ═══════════ FOOTER ═══════════ -->
-<footer class="footer">
-    <div class="footer-inner">
-        <div class="footer-grid">
-            <div class="footer-brand">
-                <h3><span class="logo-icon">◈</span> Lumina<span class="logo-light">Control</span></h3>
-                <p>Inteligência de negócios para criadores visuais.</p>
-            </div>
-            <div class="footer-links">
-                <h4>Plataforma</h4>
-                <a href="dashboard.html">Dashboard</a>
-                <a href="login.html">Portal do Cliente</a>
-                <a href="agendamento.html">Agendamento</a>
-            </div>
-            <div class="footer-links">
-                <h4>Suporte</h4>
-                <a href="contato.html">Contato</a>
-                <a href="#">Documentação</a>
-                <a href="#">FAQ</a>
-            </div>
-            <div class="footer-links">
-                <h4>Social</h4>
-                <a href="#">Instagram</a>
-                <a href="#">YouTube</a>
-                <a href="#">LinkedIn</a>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>© 2026 Lumina Control. Todos os direitos reservados.</p>
-        </div>
-    </div>
-</footer>
+    <!-- ─── Scripts de Comportamento ─── -->
+    <script>
+        // Lógica de Reveal no Scroll (Intersection Observer)
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
 
-<script>
-// ─── Mobile Nav Toggle ───
-const navToggle = document.getElementById('nav-toggle');
-const navLinks = document.getElementById('nav-links');
-navToggle.addEventListener('click', () => {
-    navLinks.classList.toggle('open');
-    navToggle.classList.toggle('active');
-});
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// ─── Sticky Navbar ───
-const navbar = document.getElementById('navbar');
-window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 60);
-});
+        // Sticky Navbar Logic
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (nav) {
+                nav.classList.toggle('scrolled', window.scrollY > 50);
+            }
+        });
 
-// ─── Smooth Scroll ───
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-        e.preventDefault();
-        const target = document.querySelector(a.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            navLinks.classList.remove('open');
-            navToggle.classList.remove('active');
+        // Geração de Partículas Dinâmicas (v1.0 Ambient)
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const particleCount = 25;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Posição Aleatória
+                const posX = Math.random() * 100;
+                const size = Math.random() * 3 + 1;
+                const delay = Math.random() * 10;
+                const duration = Math.random() * 5 + 7;
+                
+                particle.style.left = `${posX}%`;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.animationDuration = `${duration}s`;
+                
+                container.appendChild(particle);
+            }
         }
-    });
-});
+        
+        createParticles();
+    </script>
 
-// ─── Scroll Reveal Animation ───
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
-        }
-    });
-}, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-
-document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
-
-// ─── Counter Animation ───
-function animateCounter(id, target, suffix = '') {
-    const el = document.getElementById(id);
-    if (!el) return;
-    let current = 0;
-    const step = Math.ceil(target / 60);
-    const timer = setInterval(() => {
-        current += step;
-        if (current >= target) { current = target; clearInterval(timer); }
-        el.textContent = current.toLocaleString('pt-BR') + suffix;
-    }, 30);
-}
-
-const counterObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            animateCounter('counter-1', 850, '+');
-            animateCounter('counter-2', 12400, '+');
-            counterObserver.unobserve(entry.target);
-        }
-    });
-}, { threshold: 0.5 });
-
-const statsEl = document.querySelector('.hero-stats');
-if (statsEl) counterObserver.observe(statsEl);
-
-// ─── Floating Particles ───
-const particlesContainer = document.getElementById('particles');
-for (let i = 0; i < 30; i++) {
-    const p = document.createElement('div');
-    p.className = 'particle';
-    p.style.left = Math.random() * 100 + '%';
-    p.style.top = Math.random() * 100 + '%';
-    p.style.animationDelay = Math.random() * 6 + 's';
-    p.style.animationDuration = (4 + Math.random() * 6) + 's';
-    p.style.width = p.style.height = (2 + Math.random() * 3) + 'px';
-    particlesContainer.appendChild(p);
-}
-</script>
 
 </body>
+
 </html>

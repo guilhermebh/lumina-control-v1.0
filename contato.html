@@ -3,64 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Lumina Control - Entre em contato com nossa equipe">
+    <meta name="description" content="Lumina Control - Protocolo de Comunicação">
     <title>Lumina Control | Contato</title>
-    <link rel="stylesheet" href="style.css">
+    <!-- Importação do Estilo Base Unificado -->
+    <link rel="stylesheet" href="index.css">
 </head>
-<body>
+<body class="login-wrapper">
 
-<div class="premium-page" style="background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=2064');">
-    <nav class="site-nav" style="position: absolute; top: 30px; z-index: 10;">
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="login.html">Cliente</a></li>
-            <li><a href="agendamento.html">Agendamento</a></li>
-            <li><a href="contato.html" class="active">Contato</a></li>
-        </ul>
-    </nav>
+<!-- Acessibilidade: Pular direto para o formulário -->
+<a href="#form-contato" class="skip-link">Pular para o formulário</a>
 
-    <div class="premium-card">
-        <div class="premium-header">
-            <h2>Vamos conversar?</h2>
-            <p>Deixe sua mensagem e nossa equipe retornará em tempo recorde.</p>
+<!-- Elementos de Fundo -->
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+
+<!-- Container de Contato: Dividido em Informações e Formulário -->
+<div class="login-box reveal visible" style="max-width: 800px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; padding: 40px; border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+    
+    <!-- Lado Esquerdo: Informações Institucionais -->
+    <div class="contact-info">
+        <header class="login-header" style="text-align: left;">
+            <a href="index.html" class="logo" style="margin-bottom: 24px;" aria-label="Voltar para Home">
+                ◈ LUMINA<span>CONTROL</span>
+            </a>
+            <h1 style="font-size: var(--fs-h3); letter-spacing: -0.5px;">Contato</h1>
+            <p class="login-subtitle">Suporte técnico especializado</p>
+        </header>
+
+        <!-- Detalhes de Missão -->
+        <div style="margin-top: 40px; max-width: 65ch;">
+            <h2 class="uppercase text-primary" style="font-size: var(--fs-xs); margin-bottom: 16px;">Nossa Missão</h2>
+            <p class="text-sm text-muted" style="line-height: 1.6;">
+                Existimos para capacitar criadores visuais com ferramentas de inteligência de negócios que transformam talento em rentabilidade sustentável.
+            </p>
         </div>
 
-        <form id="form-contato" class="minimal-form">
+        <!-- Garantias de Privacidade -->
+        <div style="margin-top: 32px; max-width: 65ch;">
+            <h2 class="uppercase text-primary" style="font-size: var(--fs-xs); margin-bottom: 16px;">Privacidade</h2>
+            <p class="text-sm text-muted" style="line-height: 1.6;">
+                Seus dados são protegidos por protocolos de segurança de nível bancário. Nunca compartilhamos suas informações com terceiros.
+            </p>
+        </div>
+    </div>
+
+    <!-- Lado Direito: Formulário de Contato -->
+    <div>
+        <form id="form-contato" aria-label="Formulário de Contato">
+            <!-- Campo: Nome -->
             <div class="form-group">
-                <label for="nome">Nome Completo</label>
-                <input type="text" id="nome" name="nome" placeholder="Como devemos te chamar?" required>
+                <label for="nome">Seu Nome</label>
+                <div class="input-wrapper">
+                    <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <input type="text" id="nome" name="nome" placeholder="Nome completo" required>
+                </div>
             </div>
 
+            <!-- Campo: E-mail -->
             <div class="form-group">
                 <label for="email">E-mail Corporativo</label>
-                <input type="email" id="email" name="email" placeholder="seu@empresa.com" required>
+                <div class="input-wrapper">
+                    <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    <input type="email" id="email" name="email" placeholder="seu@empresa.com" required>
+                </div>
             </div>
 
+            <!-- Campo: Assunto -->
             <div class="form-group">
                 <label for="assunto">Assunto</label>
-                <input type="text" id="assunto" name="assunto" placeholder="Sobre o que deseja falar?" required>
+                <div class="input-wrapper">
+                    <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    <input type="text" id="assunto" name="assunto" placeholder="Assunto" required>
+                </div>
             </div>
 
+            <!-- Campo: Mensagem de Texto -->
             <div class="form-group">
-                <label for="mensagem-texto">Sua Mensagem</label>
-                <textarea id="mensagem-texto" name="mensagem" rows="3" placeholder="Conte-nos um pouco mais..." required></textarea>
+                <label for="mensagem-texto">Mensagem</label>
+                <textarea id="mensagem-texto" name="mensagem" placeholder="Como podemos ajudar?" required></textarea>
             </div>
 
-            <button type="submit" class="btn-minimal">Enviar Agora</button>
-        </form>
+            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                <span>Enviar Mensagem</span>
+            </button>
+            
+            <!-- Mensagem de Feedback (Status) -->
+            <div id="contato-status" class="message"></div>
 
-        <div id="contato-status" class="status-msg"></div>
+            <!-- Indicador de Segurança -->
+            <div style="text-align: center; margin-top: 16px; opacity: 0.5; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <span class="text-xs uppercase">Conexão Segura</span>
+            </div>
+        </form>
     </div>
 </div>
 
 <script>
+    // Lógica simples para simular o envio da mensagem
     document.getElementById('form-contato').addEventListener('submit', function(e) {
         e.preventDefault();
         const msg = document.getElementById('contato-status');
-        msg.textContent = '✅ Mensagem enviada com sucesso! Retornaremos em breve.';
-        msg.className = 'status-msg show success';
+        msg.textContent = 'MENSAGEM ENVIADA COM SUCESSO. RETORNAREMOS EM BREVE.';
+        msg.className = 'message success';
         this.reset();
-        setTimeout(() => { msg.className = 'status-msg'; }, 5000);
+        setTimeout(() => { msg.className = 'message'; }, 5000);
     });
 </script>
 </body>

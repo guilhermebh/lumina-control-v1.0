@@ -18,3 +18,10 @@ Thumbs.db
 
 # Temporary
 get-pip.py
+
+# Agent
+.agent/
+*.png
+*.webp
+*.txt
+LUMINA_PROJECT_SUMMARY.txt

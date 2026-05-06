@@ -68,6 +68,18 @@ def verificar_autenticacao(f):
         return f(*args, **kwargs)
     return decorated_function
 
+def requer_admin(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        usuario_id = session.get('usuario_id')
+        role = session.get('role')
+        if not usuario_id:
+            return jsonify({"error": "Não autenticado"}), 401
+        if role != 'ADMIN':
+            return jsonify({"error": "Acesso negado: Requer privilégios de administrador"}), 403
+        return f(*args, **kwargs)
+    return decorated_function
+
 # ─── Rotas de Páginas (Frontend) ───
 @app.route('/')
 def serve_index():
@@ -78,8 +90,13 @@ def serve_login():
     return send_from_directory('.', 'login.html')
 
 @app.route('/dashboard.html')
+@app.route('/dashboard.html')
 def serve_dashboard():
     return send_from_directory('.', 'dashboard.html')
+
+@app.route('/landing.html')
+def serve_landing():
+    return send_from_directory('.', 'landing.html')
 
 # Captura arquivos estáticos (CSS, JS, Imagens) ou redireciona para o index
 @app.route('/<path:path>')
@@ -124,7 +141,7 @@ def login():
 
     conn = get_db_connection()
     usuario = conn.execute(
-        "SELECT id, nome, email FROM usuarios WHERE email = ? AND senha = ?",
+        "SELECT id, nome, email, role FROM usuarios WHERE email = ? AND senha = ?",
         (email, hash_senha(senha))
     ).fetchone()
     conn.close()
@@ -133,13 +150,81 @@ def login():
         session['usuario_id'] = usuario['id']
         session['nome_usuario'] = usuario['nome']
         session['email_usuario'] = usuario['email']
+        session['role'] = usuario['role']
         return jsonify({
             "sucesso": True,
             "usuario_id": usuario['id'],
-            "nome": usuario['nome']
+            "nome": usuario['nome'],
+            "role": usuario['role']
         }), 200
     else:
         return jsonify({"error": "Email ou senha inválidos"}), 401
+
+@app.route('/registrar', methods=['POST'])
+def registrar():
+    data = request.get_json()
+    nome = data.get('nome', '').strip()
+    email = data.get('email', '').strip()
+    senha = data.get('senha', '')
+
+    if not nome or not email or not senha:
+        return jsonify({"error": "Todos os campos são obrigatórios"}), 400
+
+    conn = get_db_connection()
+    try:
+        conn.execute(
+            "INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)",
+            (nome, email, hash_senha(senha))
+        )
+        conn.commit()
+        return jsonify({"sucesso": True, "message": "Usuário registrado com sucesso"}), 201
+    except sqlite3.IntegrityError:
+        return jsonify({"error": "Este e-mail já está cadastrado"}), 400
+    except Exception as e:
+        return jsonify({"error": f"Erro ao registrar: {str(e)}"}), 500
+    finally:
+        conn.close()
+
+@app.route('/solicitar-acesso', methods=['POST'])
+def solicitar_acesso():
+    data = request.get_json()
+    nome = data.get('nome', '').strip()
+    email = data.get('email', '').strip()
+    motivo = data.get('motivo', '').strip()
+
+    if not nome or not email:
+        return jsonify({"error": "Nome e e-mail são obrigatórios"}), 400
+
+    conn = get_db_connection()
+    try:
+        conn.execute(
+            "INSERT INTO solicitacoes_acesso (nome, email, motivo) VALUES (?, ?, ?)",
+            (nome, email, motivo)
+        )
+        conn.commit()
+        return jsonify({"sucesso": True, "message": "Solicitação enviada com sucesso"}), 201
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    finally:
+        conn.close()
+
+@app.route('/recuperar-senha', methods=['POST'])
+def recuperar_senha():
+    data = request.get_json()
+    email = data.get('email', '').strip()
+
+    if not email:
+        return jsonify({"error": "E-mail é obrigatório"}), 400
+
+    conn = get_db_connection()
+    usuario = conn.execute("SELECT id FROM usuarios WHERE email = ?", (email,)).fetchone()
+    conn.close()
+
+    if usuario:
+        # Em um sistema real, aqui dispararíamos um e-mail com token
+        return jsonify({"sucesso": True, "message": "Instruções de recuperação enviadas para seu e-mail"}), 200
+    else:
+        return jsonify({"error": "E-mail não encontrado no sistema"}), 404
 
 @app.route('/logout', methods=['POST', 'GET'])
 def logout():
@@ -181,7 +266,7 @@ def obter_perfil():
     usuario_id = session.get('usuario_id')
     conn = get_db_connection()
     usuario = conn.execute(
-        "SELECT id, nome, email FROM usuarios WHERE id = ?",
+        "SELECT id, nome, email, role FROM usuarios WHERE id = ?",
         (usuario_id,)
     ).fetchone()
     conn.close()
@@ -190,7 +275,8 @@ def obter_perfil():
         return jsonify({
             "id": usuario['id'],
             "nome": usuario['nome'],
-            "email": usuario['email']
+            "email": usuario['email'],
+            "role": usuario['role']
         }), 200
     else:
         return jsonify({"error": "Usuário não encontrado"}), 404
@@ -222,6 +308,65 @@ def obter_ensaios_usuario():
         })
 
     return jsonify(resultado), 200
+
+# ─── Admin Routes ───
+@app.route('/admin/solicitacoes', methods=['GET'])
+@requer_admin
+def listar_solicitacoes():
+    conn = get_db_connection()
+    solicitacoes = conn.execute(
+        "SELECT * FROM solicitacoes_acesso ORDER BY data_criacao DESC"
+    ).fetchall()
+    conn.close()
+
+    return jsonify([dict(s) for s in solicitacoes]), 200
+
+@app.route('/admin/solicitacoes/<int:id>/status', methods=['POST'])
+@requer_admin
+def atualizar_status_solicitacao(id):
+    usuario_id = session.get('usuario_id')
+    data = request.get_json()
+    novo_status = data.get('status')
+    
+    if novo_status not in ['APROVADO', 'REJEITADO', 'PENDENTE']:
+        return jsonify({"error": "Status inválido"}), 400
+
+    conn = get_db_connection()
+    try:
+        # Obter dados da solicitação para o log
+        solicitacao = conn.execute("SELECT email FROM solicitacoes_acesso WHERE id = ?", (id,)).fetchone()
+        
+        conn.execute(
+            "UPDATE solicitacoes_acesso SET status = ? WHERE id = ?",
+            (novo_status, id)
+        )
+        
+        # Registrar log de auditoria
+        conn.execute(
+            "INSERT INTO logs_auditoria (usuario_id, acao, detalhes) VALUES (?, ?, ?)",
+            (usuario_id, f"{novo_status}_ACESSO", f"Alterou status de {solicitacao['email']} para {novo_status}")
+        )
+        
+        conn.commit()
+        return jsonify({"sucesso": True, "message": f"Solicitação {novo_status}"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    finally:
+        conn.close()
+
+@app.route('/admin/logs', methods=['GET'])
+@requer_admin
+def listar_logs():
+    conn = get_db_connection()
+    logs = conn.execute('''
+        SELECT l.*, u.nome as admin_nome 
+        FROM logs_auditoria l
+        JOIN usuarios u ON l.usuario_id = u.id
+        ORDER BY l.data_criacao DESC
+    ''').fetchall()
+    conn.close()
+
+    return jsonify([dict(l) for l in logs]), 200
 
 @app.route('/ensaios', methods=['POST'])
 def adicionar_ensaio():

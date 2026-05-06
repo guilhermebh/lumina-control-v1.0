@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Lumina Control - Seus resultados de ensaios fotográficos">
     <title>Lumina Control | Meus Resultados</title>
+    <!-- Importação do Estilo Base -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<!-- ─── Barra de Navegação (Navbar) ─── -->
 <div class="navbar">
     <div class="navbar-content">
         <h2>Lumina Control</h2>
@@ -20,6 +22,7 @@
                 <li><a href="contato.html">Contato</a></li>
             </ul>
         </nav>
+        <!-- Perfil do Usuário na Nav -->
         <div class="navbar-user">
             <div class="user-info">
                 <div class="user-name" id="nome-usuario">Carregando...</div>
@@ -34,7 +37,9 @@
     <h1 class="page-title">Meus Resultados de Ensaios</h1>
     <p class="subtitle">Compartilhe seus resultados e conquistas com sua rede</p>
 
+    <!-- Container onde os ensaios serão carregados dinamicamente via JS -->
     <div id="conteudo-ensaios">
+        <!-- Estado de Carregamento (Loading) -->
         <div class="loading">
             <div class="spinner"></div>
             <p>Carregando seus ensaios...</p>
@@ -42,12 +47,14 @@
     </div>
 </div>
 
-<!-- Modal de Compartilhamento -->
+<!-- ─── Modal de Compartilhamento em Redes Sociais ─── -->
 <div id="modal-compartilhamento" class="modal">
     <div class="modal-content">
+        <!-- Botão para fechar o modal -->
         <button class="close-modal" onclick="fecharModal()">×</button>
         <div class="modal-titulo">Compartilhar Resultado</div>
         <div class="share-options">
+            <!-- Botões de Compartilhamento com Ícones -->
             <button class="share-btn share-facebook" onclick="compartilharFacebook()">📘 Facebook</button>
             <button class="share-btn share-twitter" onclick="compartilharTwitter()">𝕏 Twitter / X</button>
             <button class="share-btn share-whatsapp" onclick="compartilharWhatsApp()">💬 WhatsApp</button>
@@ -56,15 +63,18 @@
     </div>
 </div>
 
+<!-- ─── Lógica de Aplicação (Consumo de API e Interação) ─── -->
 <script>
     const API_URL = 'http://127.0.0.1:5000';
     let ensaioSelecionado = null;
 
+    // Inicialização ao carregar o DOM
     window.addEventListener('DOMContentLoaded', () => {
         carregarPerfil();
         carregarEnsaios();
     });
 
+    // Busca dados do perfil do usuário logado
     async function carregarPerfil() {
         try {
             const response = await fetch(`${API_URL}/usuario/perfil`, { credentials: 'include' });
@@ -77,12 +87,14 @@
         }
     }
 
+    // Busca a lista de ensaios do usuário e renderiza na tela
     async function carregarEnsaios() {
         try {
             const response = await fetch(`${API_URL}/usuario/ensaios`, { credentials: 'include' });
             if (response.status === 401) { window.location.href = 'login.html'; return; }
             const ensaios = await response.json();
 
+            // Caso não existam ensaios cadastrados
             if (ensaios.length === 0) {
                 document.getElementById('conteudo-ensaios').innerHTML = `
                     <div class="empty-state">
@@ -92,6 +104,7 @@
                 return;
             }
 
+            // Mapeamento dos ensaios para HTML dinâmico
             const html = ensaios.map(ensaio => `
                 <div class="ensaio-card">
                     <img src="${ensaio.foto_url || ''}" alt="Resultado" class="ensaio-imagem"
@@ -127,6 +140,7 @@
         }
     }
 
+    // --- Funções de Controle do Modal ---
     function abrirModalCompartilhamento(ensaioId, descricao) {
         ensaioSelecionado = { id: ensaioId, descricao };
         document.getElementById('modal-compartilhamento').classList.add('ativo');
@@ -137,6 +151,7 @@
         ensaioSelecionado = null;
     }
 
+    // --- Funções de Compartilhamento Externo ---
     function compartilharFacebook() {
         const url = encodeURIComponent(window.location.href);
         window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, 'share', 'width=550,height=420');
@@ -162,6 +177,7 @@
         fecharModal();
     }
 
+    // Finaliza a sessão do usuário
     async function fazerLogout() {
         try {
             await fetch(`${API_URL}/logout`, { method: 'POST', credentials: 'include' });
@@ -169,10 +185,10 @@
         window.location.href = 'login.html';
     }
 
+    // Fecha o modal ao clicar fora dele
     document.getElementById('modal-compartilhamento').addEventListener('click', (e) => {
         if (e.target.id === 'modal-compartilhamento') fecharModal();
     });
 </script>
-
 </body>
 </html>

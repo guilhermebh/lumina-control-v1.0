@@ -19,6 +19,7 @@ def init_database():
             email TEXT UNIQUE NOT NULL,
             senha TEXT NOT NULL,
             nome TEXT NOT NULL,
+            role TEXT DEFAULT 'USER',
             data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     ''')
@@ -37,6 +38,30 @@ def init_database():
         )
     ''')
 
+    # Criar tabela de solicitações de acesso
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS solicitacoes_acesso (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nome TEXT NOT NULL,
+            email TEXT NOT NULL,
+            motivo TEXT,
+            status TEXT DEFAULT 'PENDENTE',
+            data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+
+    # Criar tabela de logs de auditoria
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS logs_auditoria (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            usuario_id INTEGER,
+            acao TEXT NOT NULL,
+            detalhes TEXT,
+            data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+        )
+    ''')
+
     # Verificar se já tem usuários
     cursor.execute('SELECT COUNT(*) FROM usuarios')
     user_count = cursor.fetchone()[0]
@@ -44,14 +69,14 @@ def init_database():
     if user_count == 0:
         # Inserir usuários de teste
         usuarios_teste = [
-            ('cliente1@lumina.com', hash_senha('senha123'), 'João Silva'),
-            ('cliente2@lumina.com', hash_senha('senha456'), 'Maria Santos'),
-            ('cliente3@lumina.com', hash_senha('senha789'), 'Pedro Oliveira'),
+            ('cliente1@lumina.com', hash_senha('senha123'), 'João Silva', 'ADMIN'),
+            ('cliente2@lumina.com', hash_senha('senha456'), 'Maria Santos', 'USER'),
+            ('cliente3@lumina.com', hash_senha('senha789'), 'Pedro Oliveira', 'USER'),
         ]
 
         cursor.executemany(
-            'INSERT INTO usuarios (email, senha, nome) VALUES (?, ?, ?)', usuarios_teste)
-        print(f"✅ {len(usuarios_teste)} usuários criados")
+            'INSERT INTO usuarios (email, senha, nome, role) VALUES (?, ?, ?, ?)', usuarios_teste)
+        print(f"[OK] {len(usuarios_teste)} usuários criados")
 
     # Verificar se já tem ensaios
     cursor.execute('SELECT COUNT(*) FROM ensaios')
@@ -74,9 +99,9 @@ def init_database():
 
         cursor.executemany(
             'INSERT INTO ensaios (usuario_id, valor, custo, foto_url, descricao) VALUES (?, ?, ?, ?, ?)', dados_teste)
-        print(f"✅ {len(dados_teste)} ensaios criados")
+        print(f"[OK] {len(dados_teste)} ensaios criados")
     else:
-        print(f"✅ Banco de dados já contém {ensaio_count} ensaios")
+        print(f"[OK] Banco de dados já contém {ensaio_count} ensaios")
 
     conn.commit()
     conn.close()
