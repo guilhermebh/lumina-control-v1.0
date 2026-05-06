@@ -9,6 +9,12 @@
     <link rel="stylesheet" href="index.css">
     
     <style>
+        :root {
+            --roi-bg: #0a1628;
+            --roi-cyan: #00d4ff;
+            --roi-orange: #ff6b35;
+        }
+
         /* --- Grid de Ferramentas --- */
         .tool-container {
             display: grid;
@@ -17,14 +23,109 @@
             margin-top: 48px;
         }
         
-        /* Estilo dos Cards de Ferramentas */
         .tool-card {
             display: flex;
             flex-direction: column;
             gap: 20px;
+            background: var(--bg-card);
         }
-        
-        /* Painel de Exibição de Resultados das Ferramentas */
+
+        /* Estilos Específicos da Calculadora Pro */
+        .roi-pro-card {
+            background: var(--roi-bg) !important;
+            border: 1px solid rgba(0, 212, 255, 0.2) !important;
+            grid-column: span 1;
+        }
+
+        .roi-grid-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .roi-input-group {
+            margin-bottom: 0;
+        }
+
+        .roi-input-group label {
+            font-size: 0.65rem;
+            color: var(--roi-cyan);
+            margin-bottom: 4px;
+        }
+
+        .roi-input-group input {
+            padding: 10px 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(0, 212, 255, 0.2);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+        }
+
+        .roi-input-group input:focus {
+            border-color: var(--roi-cyan);
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
+        }
+
+        /* Painel de Resultados Pro */
+        .roi-results-display {
+            margin-top: 24px;
+            padding: 24px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: var(--radius-sharp);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .roi-stat-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .roi-stat-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+
+        .roi-stat-value {
+            font-family: 'Fira Code', monospace;
+            font-weight: 800;
+            font-size: 1.2rem;
+        }
+
+        .roi-badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.6rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Barra de Viabilidade */
+        .viability-container {
+            margin-top: 20px;
+        }
+
+        .viability-bar-bg {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .viability-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--roi-orange), var(--roi-cyan));
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Painel de Exibição de Resultados das Ferramentas Genéricas */
         .result-panel {
             background: var(--primary-dim);
             border-left: 4px solid var(--primary);
@@ -32,7 +133,6 @@
             margin-top: 10px;
         }
         
-        /* Valor Numérico de Resultado */
         .result-value {
             font-size: 2rem;
             font-weight: 800;
@@ -78,34 +178,73 @@
     <!-- ─── Grid de Ferramentas de BI ─── -->
     <div class="tool-container">
         
-        <!-- FERRAMENTA 01: Calculadora de ROI -->
-        <!-- Calcula o retorno financeiro baseado no valor de venda e custos -->
-        <div class="card tool-card reveal visible">
+        <!-- FERRAMENTA 01: Calculadora de ROI Profissional (Upgrade) -->
+        <div class="card tool-card roi-pro-card reveal visible">
             <div>
-                <div class="decorative-meta" style="margin-bottom: 8px;">BI_TOOL_01</div>
-                <h3>Calculadora de ROI</h3>
-                <p class="text-sm text-muted">Determine a viabilidade econômica de um projeto específico.</p>
+                <div class="decorative-meta" style="margin-bottom: 8px; color: var(--roi-cyan);">BI_TOOL_PRO_ROI</div>
+                <h3 style="color: var(--roi-cyan);">Calculadora de ROI Profissional</h3>
+                <p class="text-sm text-muted">Análise avançada de lucratividade para fotógrafos.</p>
             </div>
             
-            <div class="form-group">
-                <label for="roi-venda">Valor de Venda (R$)</label>
-                <input type="number" id="roi-venda" placeholder="Ex: 5000" oninput="calcularROI()">
-            </div>
-            <div class="form-group">
-                <label for="roi-custo">Custos Diretos (R$)</label>
-                <input type="number" id="roi-custo" placeholder="Ex: 1500" oninput="calcularROI()">
+            <div class="roi-grid-inputs">
+                <div class="form-group roi-input-group">
+                    <label for="roi-venda">Valor cobrado (R$)</label>
+                    <input type="number" id="roi-venda" placeholder="0.00" oninput="calcularROI()">
+                </div>
+                <div class="form-group roi-input-group">
+                    <label for="roi-horas">Horas totais (h)</label>
+                    <input type="number" id="roi-horas" placeholder="0" oninput="calcularROI()">
+                </div>
+                <div class="form-group roi-input-group">
+                    <label for="roi-deslocamento">Deslocamento (R$)</label>
+                    <input type="number" id="roi-deslocamento" placeholder="0.00" oninput="calcularROI()">
+                </div>
+                <div class="form-group roi-input-group">
+                    <label for="roi-imposto">Taxa / Imposto (%)</label>
+                    <input type="number" id="roi-imposto" placeholder="%" oninput="calcularROI()">
+                </div>
+                <div class="form-group roi-input-group">
+                    <label for="roi-fixo">Custo Fixo Mensal (R$)</label>
+                    <input type="number" id="roi-fixo" placeholder="0.00" oninput="calcularROI()">
+                </div>
+                <div class="form-group roi-input-group">
+                    <label for="roi-jobs">Jobs no Mês</label>
+                    <input type="number" id="roi-jobs" placeholder="Qtde" oninput="calcularROI()">
+                </div>
             </div>
             
-            <!-- Painel de Saída de Dados -->
-            <div class="result-panel">
-                <div class="text-xs uppercase" style="margin-bottom: 4px;">Retorno sobre Investimento</div>
-                <div class="result-value" id="roi-resultado">0%</div>
-                <div class="text-xs text-muted" id="roi-status">Aguardando dados...</div>
+            <!-- Painel de Resultados Pro -->
+            <div class="roi-results-display">
+                <div class="roi-stat-row">
+                    <span class="roi-stat-label">Lucro Líquido</span>
+                    <span class="roi-stat-value" id="roi-lucro">R$ 0,00</span>
+                </div>
+                <div class="roi-stat-row">
+                    <span class="roi-stat-label">ROI (%)</span>
+                    <div style="text-align: right;">
+                        <span class="roi-stat-value" id="roi-percent">0%</span><br>
+                        <span class="roi-badge" id="roi-badge">Aguardando</span>
+                    </div>
+                </div>
+                <div class="roi-stat-row" style="margin-bottom: 0;">
+                    <span class="roi-stat-label">Valor/Hora Real</span>
+                    <span class="roi-stat-value" id="roi-hora-real" style="color: var(--roi-cyan);">R$ 0,00</span>
+                </div>
+
+                <!-- Barra de Viabilidade -->
+                <div class="viability-container">
+                    <div class="label-row" style="margin-bottom: 4px;">
+                        <span class="roi-stat-label" style="font-size: 0.6rem;">Índice de Viabilidade</span>
+                        <span id="viability-percent" style="font-family: 'Fira Code'; font-size: 0.7rem; color: var(--roi-cyan);">0%</span>
+                    </div>
+                    <div class="viability-bar-bg">
+                        <div class="viability-bar-fill" id="viability-fill"></div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- FERRAMENTA 02: Simulador de Valor de Hora -->
-        <!-- Ajuda o profissional a definir sua taxa horária com base em custos fixos -->
         <div class="card tool-card reveal visible" style="transition-delay: 0.1s;">
             <div>
                 <div class="decorative-meta" style="margin-bottom: 8px;">BI_TOOL_02</div>
@@ -130,7 +269,6 @@
         </div>
 
         <!-- FERRAMENTA 03: Projetor de Metas -->
-        <!-- Calcula a quantidade de contratos necessários para atingir uma meta financeira -->
         <div class="card tool-card reveal visible" style="transition-delay: 0.2s;">
             <div>
                 <div class="decorative-meta" style="margin-bottom: 8px;">BI_TOOL_03</div>
@@ -165,33 +303,95 @@
 
 <!-- ─── Funções de Cálculo das Ferramentas ─── -->
 <script>
-    // Lógica para Cálculo de ROI
-    function calcularROI() {
-        const venda = parseFloat(document.getElementById('roi-venda').value) || 0;
-        const custo = parseFloat(document.getElementById('roi-custo').value) || 0;
-        const res = document.getElementById('roi-resultado');
-        const status = document.getElementById('roi-status');
-        
-        if (venda > 0 && custo > 0) {
-            const roi = ((venda - custo) / custo) * 100;
-            res.textContent = roi.toFixed(1) + '%';
-            // Cor dinâmica baseada na performance
-            res.style.color = roi > 100 ? 'var(--primary)' : (roi > 50 ? 'var(--accent)' : '#ff4444');
-            status.textContent = roi > 100 ? 'ALTA RENTABILIDADE' : 'DENTRO DA MÉDIA';
-        } else {
-            res.textContent = '0%';
-            status.textContent = 'Aguardando dados...';
+    // Configuração de Persistência LocalStorage
+    const STORAGE_KEY = 'lumina_roi_data';
+
+    function saveToStorage(data) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+
+    function loadFromStorage() {
+        const data = localStorage.getItem(STORAGE_KEY);
+        if (data) {
+            const parsed = JSON.parse(data);
+            Object.keys(parsed).forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = parsed[id];
+            });
+            calcularROI(false); // Calcula sem salvar novamente
         }
     }
 
-    // Lógica para Cálculo de Valor de Hora
+    // Lógica para Cálculo de ROI Avançado
+    function calcularROI(shouldSave = true) {
+        const inputs = {
+            'roi-venda': parseFloat(document.getElementById('roi-venda').value) || 0,
+            'roi-horas': parseFloat(document.getElementById('roi-horas').value) || 0,
+            'roi-deslocamento': parseFloat(document.getElementById('roi-deslocamento').value) || 0,
+            'roi-imposto': parseFloat(document.getElementById('roi-imposto').value) || 0,
+            'roi-fixo': parseFloat(document.getElementById('roi-fixo').value) || 0,
+            'roi-jobs': parseFloat(document.getElementById('roi-jobs').value) || 1
+        };
+
+        if (shouldSave) saveToStorage(inputs);
+
+        // Elementos de Saída
+        const outLucro = document.getElementById('roi-lucro');
+        const outROI = document.getElementById('roi-percent');
+        const outBadge = document.getElementById('roi-badge');
+        const outHoraReal = document.getElementById('roi-hora-real');
+        const outViabilityFill = document.getElementById('viability-fill');
+        const outViabilityText = document.getElementById('viability-percent');
+
+        // Fórmulas
+        const custoFixoProporcional = inputs['roi-fixo'] / (inputs['roi-jobs'] || 1);
+        const impostoValor = inputs['roi-venda'] * (inputs['roi-imposto'] / 100);
+        const custoTotal = inputs['roi-deslocamento'] + custoFixoProporcional + impostoValor;
+        
+        const lucroLiquido = inputs['roi-venda'] - custoTotal;
+        const roi = custoTotal > 0 ? (lucroLiquido / custoTotal) * 100 : 0;
+        const valorHoraReal = inputs['roi-horas'] > 0 ? lucroLiquido / inputs['roi-horas'] : 0;
+
+        // Atualização da Interface
+        outLucro.textContent = lucroLiquido.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        outLucro.style.color = lucroLiquido >= 0 ? '#00ff80' : '#ff4444';
+        
+        outROI.textContent = roi.toFixed(1) + '%';
+        outHoraReal.textContent = valorHoraReal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+        // Classificação do ROI
+        if (roi > 40) {
+            outBadge.textContent = 'Excelente';
+            outBadge.style.background = 'rgba(0, 255, 128, 0.2)';
+            outBadge.style.color = '#00ff80';
+        } else if (roi >= 20) {
+            outBadge.textContent = 'Bom';
+            outBadge.style.background = 'rgba(0, 212, 255, 0.2)';
+            outBadge.style.color = '#00d4ff';
+        } else if (roi >= 0) {
+            outBadge.textContent = 'Atenção';
+            outBadge.style.background = 'rgba(255, 107, 53, 0.2)';
+            outBadge.style.color = '#ff6b35';
+        } else {
+            outBadge.textContent = 'Prejuízo';
+            outBadge.style.background = 'rgba(255, 68, 68, 0.2)';
+            outBadge.style.color = '#ff4444';
+        }
+
+        // Barra de Viabilidade (100% = 50% de Margem Líquida)
+        const margem = inputs['roi-venda'] > 0 ? (lucroLiquido / inputs['roi-venda']) : 0;
+        const viability = Math.min(Math.max((margem / 0.5) * 100, 0), 100);
+        outViabilityFill.style.width = viability + '%';
+        outViabilityText.textContent = viability.toFixed(0) + '%';
+    }
+
+    // Lógica para Cálculo de Valor de Hora (Ferramenta 02)
     function calcularPreco() {
         const fixo = parseFloat(document.getElementById('price-fixo').value) || 0;
         const horas = parseFloat(document.getElementById('price-horas').value) || 0;
         const res = document.getElementById('price-resultado');
         
         if (fixo > 0 && horas > 0) {
-            // Fórmula: (Custos Fixos * 1.5 de margem) / Horas Disponíveis
             const valor = (fixo * 1.5) / horas; 
             res.textContent = 'R$ ' + valor.toFixed(0);
         } else {
@@ -199,7 +399,7 @@
         }
     }
 
-    // Lógica para Cálculo de Metas
+    // Lógica para Cálculo de Metas (Ferramenta 03)
     function calcularMeta() {
         const meta = parseFloat(document.getElementById('meta-valor').value) || 0;
         const ticket = parseFloat(document.getElementById('meta-ticket').value) || 0;
@@ -213,15 +413,21 @@
         }
     }
 
-    // Inicializa animações de revelação no scroll
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
-        });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    // Inicialização
+    document.addEventListener('DOMContentLoaded', () => {
+        loadFromStorage();
+
+        // Observer de Animação
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    });
 </script>
+
 </body>
 </html>
