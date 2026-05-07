@@ -213,6 +213,8 @@
                 </div>
             </div>
             
+            <button class="btn btn-primary" onclick="calcularROI()" style="width: 100%;">Calcular ROI</button>
+            
             <!-- Painel de Resultados Pro -->
             <div class="roi-results-display">
                 <div class="roi-stat-row">
@@ -261,6 +263,8 @@
                 <input type="number" id="price-horas" placeholder="Ex: 80" oninput="calcularPreco()">
             </div>
             
+            <button class="btn btn-outline" onclick="calcularPreco()" style="width: 100%; margin-top: 12px;">Calcular</button>
+            
             <div class="result-panel">
                 <div class="text-xs uppercase" style="margin-bottom: 4px;">Valor Sugerido / Hora</div>
                 <div class="result-value" id="price-resultado">R$ 0</div>
@@ -284,6 +288,8 @@
                 <label for="meta-ticket">Ticket Médio (R$)</label>
                 <input type="number" id="meta-ticket" placeholder="Ex: 2500" oninput="calcularMeta()">
             </div>
+            
+            <button class="btn btn-outline" onclick="calcularMeta()" style="width: 100%; margin-top: 12px;">Calcular</button>
             
             <div class="result-panel">
                 <div class="text-xs uppercase" style="margin-bottom: 4px;">Jobs Necessários</div>
